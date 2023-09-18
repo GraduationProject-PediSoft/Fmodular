@@ -1,0 +1,15 @@
+.container{
+    @apply flex justify-center items-center h-screen w-screen min-h-full min-w-full md:px-40 px-4;
+}
+
+.login-card{
+    @apply shadow-md p-4 rounded-lg min-w-full flex flex-row
+}
+
+.left-side{
+    background-color: aqua;
+}
+
+.right-side{
+
+}
