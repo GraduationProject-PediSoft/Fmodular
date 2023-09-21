@@ -3,13 +3,30 @@
 }
 
 .login-card{
-    @apply shadow-md p-4 rounded-lg min-w-full flex flex-row
+    @apply min-w-full flex flex-col lg:flex-row h-[80vh] shadow-md
 }
 
 .left-side{
-    background-color: aqua;
+    @apply flex-1 bg-amber-600 hidden md:block;
+
+    img{
+        @apply w-full h-full object-cover
+    }
 }
 
-.right-side{
 
+.right-side{
+    @apply flex-1 flex flex-col bg-blue-500 items-center p-4 rounded-lg;
+
+    img{
+        @apply w-auto h-1/4 mb-8 
+    }
+
+    h2{
+        @apply text-base font-bold text-center  mb-8 
+    }
+}
+
+.form-item{
+    @apply flex flex-col gap-2  mb-8 
 }

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./login-screen.component.scss']
 })
 export class LoginScreenComponent {
-
+  a:any
 }
