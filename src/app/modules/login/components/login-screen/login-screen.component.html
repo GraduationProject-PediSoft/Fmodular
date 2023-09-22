@@ -13,14 +13,14 @@
             <div class="form-item">
                 <label htmlFor="username">Username</label>
                 <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
-                <small id="username-help">Enter your username to reset your password.</small>
             </div>
 
             <div class="form-item">
-                <label htmlFor="password">Username</label>
+                <label htmlFor="password">Password</label>
                 <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
-                <small id="username-help">Enter your username to reset your password.</small>
             </div>
+
+            <p-button label="Ingresar" (onClick)="login()"></p-button>
             
 
         </div>

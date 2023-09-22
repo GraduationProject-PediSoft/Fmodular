@@ -4,6 +4,7 @@ import { LoginRouterModule } from './login-routing.module';
 import { LoginScreenComponent } from './components/login-screen/login-screen.component';
 import { FormsModule } from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext'
+import { ButtonModule } from 'primeng/button'
 
 
 
@@ -15,7 +16,8 @@ import {InputTextModule} from 'primeng/inputtext'
     CommonModule,
     LoginRouterModule,
     FormsModule,
-    InputTextModule
+    InputTextModule,
+    ButtonModule
   ]
 })
 export class LoginModule { }
