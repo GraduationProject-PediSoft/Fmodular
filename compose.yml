@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  frontend:
+    build: .
+    hostname: frontend
+    container_name: frontend
+    

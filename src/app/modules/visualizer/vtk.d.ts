@@ -1,0 +1,8 @@
+declare module '@kitware/vtk.js/Widgets/Widgets3D/LineWidget'
+declare module '@kitware/vtk.js/Widgets/Widgets3D/PaintWidget'
+declare module '@kitware/vtk.js/Widgets/Widgets3D/RectangleWidget'
+declare module '@kitware/vtk.js/Widgets/Widgets3D/EllipseWidget'
+declare module '@kitware/vtk.js/Widgets/Widgets3D/SplineWidget'
+declare module '@kitware/vtk.js/Widgets/Widgets3D/ShapeWidget/Constants'
+declare module '@kitware/vtk.js/Filters/General/PaintFilter'
+declare module '@kitware/vtk.js/Filters/General/PaintFilter'

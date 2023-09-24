@@ -1,7 +1,14 @@
 <div class="container">
-    <app-header></app-header>
+    <app-header class="sticky top-0"></app-header>
     <div class="main-wrapper">
-        <p></p>
+        
+        <form name="algorithmPick" #algorithmPick="ngForm" (ngSubmit)="getAlgorithmInfo()">
+            <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona el algoritmo</label>
+            <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="test" [(ngModel)]="selectedAlgorithm" [style]="{ width: '100%' }"></p-dropdown>
+            <p-button label="Obtener información" [disabled]="!algorithmPick.form.valid"></p-button>
+        </form>
+
+        <app-vtk-visualizer></app-vtk-visualizer>
     </div>
     <app-footer class="mt-auto"></app-footer>
 </div>

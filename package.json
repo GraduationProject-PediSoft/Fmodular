@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@kitware/vtk.js": "^28.12.0",
+    "itk-wasm": "^1.0.0-b.18",
     "primeng": "^16.3.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

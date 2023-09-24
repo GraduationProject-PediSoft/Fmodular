@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
 
+  selectedAlgorithm: any
+
+  readonly test = [
+    "hola",
+    "dos",
+    "tressss"
+  ]
+
+  getAlgorithmInfo(){
+
+  }
 }
