@@ -9,7 +9,7 @@
 form{
     @apply flex flex-col gap-4 items-center;
     label{
-        @apply text-left
+        @apply text-center
     }
     p-dropdown{
         @apply w-full;
