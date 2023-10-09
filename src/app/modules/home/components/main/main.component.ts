@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlgorithmService } from '../../services/algorithm.service';
 
 @Component({
   selector: 'app-main',
@@ -15,7 +16,12 @@ export class MainComponent {
     "tressss"
   ]
 
-  getAlgorithmInfo(){
+  file: File | null = null
 
+  constructor(private algorithmS: AlgorithmService){}
+
+
+  getAlgorithmInfo(){
+    this.algorithmS.test()
   }
 }

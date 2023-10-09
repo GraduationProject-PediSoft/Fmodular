@@ -8,8 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown'
 import { VisualizerModule } from '../visualizer/visualizer.module';
-
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,9 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
     ButtonModule,
     FormsModule,
     DropdownModule,
-    VisualizerModule
+    VisualizerModule,
+    HttpClientModule,
+    
   ]
 })
 export class HomeModule { }
