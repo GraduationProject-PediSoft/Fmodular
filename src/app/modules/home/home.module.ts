@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown'
 import { VisualizerModule } from '../visualizer/visualizer.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     DropdownModule,
     VisualizerModule,
     HttpClientModule,
-    
+    ToastModule
+  ],
+  providers:[
+    MessageService
   ]
 })
 export class HomeModule { }

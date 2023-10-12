@@ -1,122 +1,38 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
 import { InMemoryCache } from '@apollo/client/core';
+import { HttpLink } from 'apollo-angular/http';
+
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { introspectionQuery } from 'src/app/shared/introspection.graphql';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AlgorithmService {
   //https://atheros.ai/blog/graphql-introspection-and-introspection-queries
 
-  constructor(private apollo: Apollo) {
-    this.apollo.removeClient();
-    this.apollo.create({
+  constructor(private http: HttpClient, private apollo: Apollo, private httpLink: HttpLink){}
+
+  getAlgorithms(): Observable<Iterable<string>>{
+    return this.http.get<Iterable<string>>(environment.backendApi+"/explorer/")
+  }
+
+  getAlgorithmInfo(path: string): Observable<any>{
+    this.genNewClient(path)
+    return this.apollo.query<any>({query: introspectionQuery})
+  }
+
+
+
+  private genNewClient(uri: string){
+    this.apollo.removeClient()
+    this.apollo.create(({
       cache: new InMemoryCache(),
-      uri: "https://countries.trevorblades.com/"
-    })
-
+      link: this.httpLink.create({uri: `${environment.backendApi}/${uri}/graphql`})
+    }))
   }
-
-  test() {
-    const query = gql`
-      fragment FullType on __Type {
-  kind
-  name
-  description
-  fields(includeDeprecated: false) {
-    name
-    description
-    args {
-      ...InputValue
-    }
-    type {
-      ...TypeRef
-    }
-    isDeprecated
-    deprecationReason
-  }
-  inputFields {
-    ...InputValue
-  }
-  interfaces {
-    ...TypeRef
-  }
-  enumValues(includeDeprecated: true) {
-    name
-    description
-    isDeprecated
-    deprecationReason
-  }
-  possibleTypes {
-    ...TypeRef
-  }
-}
-fragment InputValue on __InputValue {
-  name
-  description
-  type {
-    ...TypeRef
-  }
-  defaultValue
-}
-fragment TypeRef on __Type {
-  kind
-  name
-  ofType {
-    kind
-    name
-    ofType {
-      kind
-      name
-      ofType {
-        kind
-        name
-        ofType {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query IntrospectionQuery {
-  __schema {
-    queryType {
-      name
-    }
-    mutationType {
-      name
-    }
-    types {
-      ...FullType
-    }
-    directives {
-      name
-      description
-      locations
-      args {
-        ...InputValue
-      }
-    }
-  }
-}
-    `
-    this.apollo.query<any>({ query }).subscribe(data =>
-      console.log(data)
-    )
-  }
-
 
 }
