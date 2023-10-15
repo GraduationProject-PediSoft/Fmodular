@@ -15,6 +15,9 @@ import { HomeComponent } from './home.component';
 import { MainComponent } from './components/main/main.component';
 import { UsersComponent } from './components/users/users.component';
 import { HelpComponent } from './components/help/help.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { StepsModule } from 'primeng/steps';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { HelpComponent } from './components/help/help.component';
     DropdownModule,
     VisualizerModule,
     HttpClientModule,
-    ToastModule
+    ToastModule,
+    FieldsetModule,
+    StepsModule,
+    DividerModule
   ],
   providers:[
     MessageService

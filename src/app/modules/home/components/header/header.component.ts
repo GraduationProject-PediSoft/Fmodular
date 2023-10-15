@@ -1,5 +1,4 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,14 +11,7 @@ export class HeaderComponent {
 
   mobileMenuVisible = false
 
-  constructor(private renderer: Renderer2, protected router: Router) {
-  }
-
-  protected checkRoute(route: string) {
-    return this.router.isActive(route, 
-      { paths: 'subset', queryParams: 'subset', 
-      fragment: 'ignored', matrixParams: 'ignored' }
-    )
+  constructor(private renderer: Renderer2) {
   }
 
 

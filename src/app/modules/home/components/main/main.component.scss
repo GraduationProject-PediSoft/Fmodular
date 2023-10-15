@@ -1,0 +1,12 @@
+ul.emoji-list {
+    list-style-type: none;
+}
+
+ul.emoji-list > li:before {
+    content: "☑️";
+    margin-right: 8px; 
+}
+
+ul.emoji-list > li:hover:before {
+    content: "✅";
+}

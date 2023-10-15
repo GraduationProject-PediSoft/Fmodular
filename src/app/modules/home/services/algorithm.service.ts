@@ -4,7 +4,7 @@ import { InMemoryCache } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
 
 import { Apollo } from 'apollo-angular';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { introspectionQuery } from 'src/app/shared/introspection.graphql';
 
@@ -13,16 +13,26 @@ import { introspectionQuery } from 'src/app/shared/introspection.graphql';
 })
 export class AlgorithmService {
   //https://atheros.ai/blog/graphql-introspection-and-introspection-queries
+  private readonly QUERY_TYPE = "Query"
 
   constructor(private http: HttpClient, private apollo: Apollo, private httpLink: HttpLink){}
 
-  getAlgorithms(): Observable<Iterable<string>>{
+  getServices(): Observable<Iterable<string>>{
     return this.http.get<Iterable<string>>(environment.backendApi+"/explorer/")
   }
 
-  getAlgorithmInfo(path: string): Observable<any>{
+  getServiceInfo(path: string): Observable<any>{
     this.genNewClient(path)
     return this.apollo.query<any>({query: introspectionQuery})
+      .pipe(
+        map(v =>{
+          return v.data.__schema.types.filter(
+            obj => obj.name === this.QUERY_TYPE
+          )[0].fields.map(
+            obj => obj.name
+          )
+        })
+      )
   }
 
 

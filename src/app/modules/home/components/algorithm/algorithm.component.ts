@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlgorithmService } from '../../services/algorithm.service';
 import { MessageService } from 'primeng/api';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-algorithm',
@@ -9,21 +10,28 @@ import { MessageService } from 'primeng/api';
 })
 export class AlgorithmComponent implements OnInit{
 
+  selectedService: any
+
+  services: string[] = []
+
+  loadingS = false
+
+  algorithms: string[] = []
+
   selectedAlgorithm: any
 
-  algo: string[] = []
 
   constructor(private algorithmS: AlgorithmService, private messS: MessageService){}
 
   ngOnInit(): void {
-    this.getAlgorithms()
+    this.getServices()
   }
 
-  getAlgorithmInfo(){
-    this.algorithmS.getAlgorithmInfo(this.selectedAlgorithm)
+  getServiceInfo(){
+    this.algorithmS.getServiceInfo(this.selectedService)
       .subscribe({
         next: v => {
-          
+          this.algorithms = v
         },
         error: (e)=>{
           this.messS.add({
@@ -35,21 +43,23 @@ export class AlgorithmComponent implements OnInit{
       })
   }
 
-  getAlgorithms(){
-    this.algorithmS.getAlgorithms().subscribe({
+  getServices(){
+    this.loadingS = true
+    this.algorithmS.getServices().pipe(
+      finalize(() =>{
+        this.loadingS = false
+      })
+    ).subscribe({
       next: (res: Iterable<string>) =>{
-        this.algo = [...res]
+        this.services = [...res]
       },
       error: () =>{
         this.messS.add({
-          closable: false,
           severity: "error",
-          sticky: true,
-          summary: "Error al obtener algoritmos, consulta tu conexión"
+          summary: "Error al obtener algoritmos, consulta tu conexión",
+          sticky: true
         })
       }
     })
-  }
-
-  
+  }  
 }

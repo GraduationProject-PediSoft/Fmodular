@@ -1,11 +1,20 @@
-<form name="microPick" #microPick="ngForm" (ngSubmit)="getAlgorithmInfo()">
-    <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un Servicio</label>
-
-    <div class="cell">
-        <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algo"
-            [(ngModel)]="selectedAlgorithm" [style]="{ width: '100%' }"></p-dropdown>
-        <p-button icon="pi pi-refresh" (onClick)="this.getAlgorithms()"></p-button>
-    </div>
-    <p-button label="Obtener información" [disabled]="!microPick.form.valid"
-        (onClick)="this.getAlgorithmInfo()"></p-button>
-</form>
+<div class="container">
+    <form name="microPick" #microPick="ngForm" (ngSubmit)="getServiceInfo()">
+        <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un Servicio</label>
+    
+        <div class="cell">
+            <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="services"
+                [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
+            <p-button [loading]="loadingS" icon="pi pi-refresh" (onClick)="this.getServices()"></p-button>
+        </div>
+        <p-button label="Obtener información" [disabled]="!microPick.form.valid" type="submit"></p-button>
+    </form>
+    <p-divider class="w-full md:w-[65%]" *ngIf="this.algorithms.length !== 0"></p-divider>
+    <form *ngIf="this.algorithms.length !== 0" name="algoPick" #algoPick="ngForm" (ngSubmit)="buildForm()">
+        <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
+    
+        <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms"
+                [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
+        <p-button label="Seleccionar algoritmo" [disabled]="!algoPick.form.valid" type="submit"></p-button>
+    </form>
+</div>
