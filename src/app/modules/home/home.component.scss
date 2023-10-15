@@ -1,0 +1,7 @@
+.container{
+    @apply flex flex-col h-screen w-screen min-h-full min-w-full;
+}
+
+.main-wrapper{
+    @apply flex-grow px-32 py-8 inline-flex flex-col items-center gap-6
+}

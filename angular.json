@@ -34,7 +34,12 @@
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "seedrandom",
+              "spark-md5",
+              "fast-deep-equal"
+            ]
           },
           "configurations": {
             "production": {

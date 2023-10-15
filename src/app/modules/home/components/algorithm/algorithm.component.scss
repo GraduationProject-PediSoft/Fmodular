@@ -1,0 +1,21 @@
+.container{
+    @apply flex flex-col h-screen w-screen min-h-full min-w-full;
+}
+
+.main-wrapper{
+    @apply flex-grow px-32 py-8 inline-flex flex-col items-center gap-6
+}
+
+form{
+    @apply flex flex-col gap-4 items-center flex-1;
+    label{
+        @apply text-center
+    }
+    p-dropdown{
+        @apply w-full;
+    }
+}
+
+.cell{
+    @apply flex flex-row gap-1
+}

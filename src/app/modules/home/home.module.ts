@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { FooterComponent } from './components/footer/footer.component';
-import { MainComponent } from './components/main/main.component';
+import { AlgorithmComponent } from './components/algorithm/algorithm.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown'
@@ -11,12 +11,20 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { HomeComponent } from './home.component';
+import { MainComponent } from './components/main/main.component';
+import { UsersComponent } from './components/users/users.component';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    MainComponent
+    AlgorithmComponent,
+    HomeComponent,
+    MainComponent,
+    UsersComponent,
+    HelpComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +38,7 @@ import { MessageService } from 'primeng/api';
   ],
   providers:[
     MessageService
-  ]
+  ],
+  bootstrap: [HomeComponent]
 })
 export class HomeModule { }
