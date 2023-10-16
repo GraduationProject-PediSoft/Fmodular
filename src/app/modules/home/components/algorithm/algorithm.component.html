@@ -13,8 +13,9 @@
     <form *ngIf="this.algorithms.length !== 0" name="algoPick" #algoPick="ngForm" (ngSubmit)="buildForm()">
         <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
     
-        <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms"
+        <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms" optionLabel="name"
                 [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
         <p-button label="Seleccionar algoritmo" [disabled]="!algoPick.form.valid" type="submit"></p-button>
     </form>
+    
 </div>

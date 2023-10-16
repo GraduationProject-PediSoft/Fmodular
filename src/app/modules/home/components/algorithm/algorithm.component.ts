@@ -20,6 +20,8 @@ export class AlgorithmComponent implements OnInit{
 
   selectedAlgorithm: any
 
+  buildFormBool = false
+
 
   constructor(private algorithmS: AlgorithmService, private messS: MessageService){}
 
@@ -31,6 +33,7 @@ export class AlgorithmComponent implements OnInit{
     this.algorithmS.getServiceInfo(this.selectedService)
       .subscribe({
         next: v => {
+          console.log(v)
           this.algorithms = v
         },
         error: (e)=>{
@@ -61,5 +64,9 @@ export class AlgorithmComponent implements OnInit{
         })
       }
     })
-  }  
+  }
+  
+  buildForm(){
+    this.buildFormBool = true
+  }
 }

@@ -26,11 +26,7 @@ export class AlgorithmService {
     return this.apollo.query<any>({query: introspectionQuery})
       .pipe(
         map(v =>{
-          return v.data.__schema.types.filter(
-            obj => obj.name === this.QUERY_TYPE
-          )[0].fields.map(
-            obj => obj.name
-          )
+          const name = v.data.__schema 
         })
       )
   }
