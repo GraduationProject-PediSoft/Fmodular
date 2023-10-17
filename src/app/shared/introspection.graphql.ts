@@ -21,6 +21,7 @@ query IntrospectionQuery {
                         description
                         inputFields{
                             name
+                            description
                             type{
                                 ofType{
                                     name
