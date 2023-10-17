@@ -9,7 +9,9 @@
         </div>
         <p-button label="Obtener información" [disabled]="!microPick.form.valid" type="submit"></p-button>
     </form>
+
     <p-divider class="w-full md:w-[65%]" *ngIf="this.algorithms.length !== 0"></p-divider>
+    
     <form *ngIf="this.algorithms.length !== 0" name="algoPick" #algoPick="ngForm" (ngSubmit)="buildForm()">
         <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
     

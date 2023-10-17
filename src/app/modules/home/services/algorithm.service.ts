@@ -25,9 +25,7 @@ export class AlgorithmService {
     this.genNewClient(path)
     return this.apollo.query<any>({query: introspectionQuery})
       .pipe(
-        map(v =>{
-          const name = v.data.__schema 
-        })
+        map(v => v.data.__schema.queryType.fields)
       )
   }
 

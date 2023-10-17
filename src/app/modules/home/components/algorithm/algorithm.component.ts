@@ -33,7 +33,6 @@ export class AlgorithmComponent implements OnInit{
     this.algorithmS.getServiceInfo(this.selectedService)
       .subscribe({
         next: v => {
-          console.log(v)
           this.algorithms = v
         },
         error: (e)=>{
