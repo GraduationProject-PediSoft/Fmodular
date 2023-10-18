@@ -34,6 +34,7 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./vtk-visualizer.component.scss']
 })
 export class VtkVisualizerComponent implements OnChanges {
+  //Visualizer container
   @ViewChild("visualizer", { static: true })
   visualizer!: ElementRef
 
@@ -41,113 +42,120 @@ export class VtkVisualizerComponent implements OnChanges {
   @Input()
   file: File | null = null
 
-  isDicom: boolean = false //Indicates that the file is dicom 
+  //Items as a stream 
+  itemsMenu: MenuItem[] = []
 
-  readonly itemsMenu:MenuItem[] = [
-    {
-      label: 'Widgets',
-      icon: 'pi pi-fw pi-palette',
-      disabled: this.file === null,
-      items: [
-        {
-          label: 'Nuevo',
-          icon: 'pi pi-fw pi-plus',
-          items: [
-            {
-              label: 'Línea',
-              items: [
-                {
-                  label: 'Añadir',
-                  command: () => this.visualizationCompleted ? this.addLine() : undefined
-                },
-                {
-                  label: 'Eliminar',
-                  command: () => this.visualizationCompleted ? this.deleteLine() : undefined
-                }
-              ]
-            },
-            {
-              label: 'Rectángulo',
-              command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Rectángulo') : undefined
-            },
-            {
-              label: 'Elipse',
-              command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Elipse') : undefined
-            },
-            {
-              label: 'Circulo',
-              command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Circulo') : undefined
-            },
-            {
-              label: 'Spline',
-              command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Spline') : undefined
-            },
-          ]
-        },
-        {
-          label: 'Eliminar todos',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.visualizationCompleted ? this.deleteAllWidgets() : undefined
-        }
-      ]
-    },
-    {
-      label: 'Mostrar Tags',
-      icon: 'pi pi-fw pi-tags',
-      command: () => this.showTags(),
-      disabled: !this.isDicom
-      
-    }
-  ];
+  get items() {
+    return [
+      {
+        label: 'Widgets',
+        icon: 'pi pi-fw pi-palette',
+        disabled: this.file == null,
+        items: [
+          {
+            label: 'Nuevo',
+            icon: 'pi pi-fw pi-plus',
+            items: [
+              {
+                label: 'Línea',
+                items: [
+                  {
+                    label: 'Añadir',
+                    command: () => this.visualizationCompleted ? this.addLine() : undefined
+                  },
+                  {
+                    label: 'Eliminar',
+                    command: () => this.visualizationCompleted ? this.deleteLine() : undefined
+                  }
+                ]
+              },
+              {
+                label: 'Rectángulo',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Rectángulo') : undefined
+              },
+              {
+                label: 'Elipse',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Elipse') : undefined
+              },
+              {
+                label: 'Circulo',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Circulo') : undefined
+              },
+              {
+                label: 'Spline',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Spline') : undefined
+              },
+            ]
+          },
+          {
+            label: 'Eliminar todos',
+            icon: 'pi pi-fw pi-trash',
+            command: () => this.visualizationCompleted ? this.deleteAllWidgets() : undefined
+          }
+        ]
+      },
+      {
+        label: 'Mostrar Tags',
+        icon: 'pi pi-fw pi-tags',
+        command: () => this.showTags(),
+        disabled: this.file?.type !== "application/dicom"
+
+      }
+    ]
+  }
 
   constructor(private dialogService: DialogService,
     private cdRef: ChangeDetectorRef, private tagsService: TagsService) { }
 
 
+
+
   //ImageVisualization -- One time for Image
-  renderWindow = vtkRenderWindow.newInstance()
-  renderer = vtkRenderer.newInstance()
-  openGlRenderWindow = vtkOpenGLRenderWindow.newInstance()
-  actor = vtkImageSlice.newInstance()
-  mapper = vtkImageMapper.newInstance()
-  visualizationCompleted: boolean = false;
+  private renderWindow = vtkRenderWindow.newInstance()
+  private renderer = vtkRenderer.newInstance()
+  private openGlRenderWindow = vtkOpenGLRenderWindow.newInstance()
+  private actor = vtkImageSlice.newInstance()
+  private mapper = vtkImageMapper.newInstance()
+  private visualizationCompleted: boolean = false;
 
   //Image Style
-  style = vtkInteractorStyleManipulator.newInstance();
-  interactor = vtkRenderWindowInteractor.newInstance()
-  styleImage = vtkInteractorStyleImage.newInstance();
-  imageInteractor = vtkRenderWindowInteractor.newInstance();
+  private style = vtkInteractorStyleManipulator.newInstance();
+  private interactor = vtkRenderWindowInteractor.newInstance()
+  private styleImage = vtkInteractorStyleImage.newInstance();
+  private imageInteractor = vtkRenderWindowInteractor.newInstance();
 
   //Response Visualization
-  renderWindowResponse = vtkRenderWindow.newInstance()
-  rendererResponse = vtkRenderer.newInstance()
-  openGlRenderWindowResponse = vtkOpenGLRenderWindow.newInstance()
-  actorResponse = vtkImageSlice.newInstance()
-  mapperResponse = vtkImageMapper.newInstance()
+  private renderWindowResponse = vtkRenderWindow.newInstance()
+  private rendererResponse = vtkRenderer.newInstance()
+  private openGlRenderWindowResponse = vtkOpenGLRenderWindow.newInstance()
+  private actorResponse = vtkImageSlice.newInstance()
+  private mapperResponse = vtkImageMapper.newInstance()
 
   //Widgets
-  newLine: any
-  lineWidget = vtkLineWidget.newInstance()
-  widgetManager = vtkWidgetManager.newInstance();
-  distanceLineWidget: string | undefined
-  selectedLineWidgetIndex: number | undefined | null
+  private newLine: any
+  private lineWidget = vtkLineWidget.newInstance()
+  private widgetManager = vtkWidgetManager.newInstance();
+  private distanceLineWidget: string | undefined
+  private selectedLineWidgetIndex: number | undefined | null
 
 
   //Tags Dialog
-  ref: DynamicDialogRef | undefined;
-  dynamicDialog: boolean = false;
-  tags: Map<string, string> = new Map<string, string>();
+  private ref: DynamicDialogRef | undefined;
+  private dynamicDialog: boolean = false;
+  private tags: Map<string, string> = new Map<string, string>();
 
-  
+
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['file']){
+    if (changes['file']) {
+      this.itemsMenu = this.items
       this.render()
     }
   }
 
+
   render() {
-    if(this.file == null ){
+    if (this.file == null) {
       return
     }
 
@@ -157,13 +165,15 @@ export class VtkVisualizerComponent implements OnChanges {
       const arrayBuffer = iEvent.target.result;
       const array = new Uint8Array(arrayBuffer);
       const { image: itkImage, webWorker } = await readImageArrayBuffer(null,
-                array.buffer, this.file!.name, this.file!.type);
-      const { tags: tags } = await readDICOMTags(webWorker, this.file!)
-      this.getDICOMTags(tags)
+        array.buffer, this.file!.name, this.file!.type);
 
-      const dicomImage = vtkITKHelper.convertItkToVtkImage(itkImage);
+      if (this.file?.type === "application/dicom") {
+        const { tags: tags } = await readDICOMTags(webWorker, this.file)
+        this.getDICOMTags(tags)
+      }
+      const image = vtkITKHelper.convertItkToVtkImage(itkImage);
 
-      this.imageRendering(dicomImage)
+      this.imageRendering(image)
     };
 
     reader.readAsArrayBuffer(this.file);
@@ -399,6 +409,65 @@ export class VtkVisualizerComponent implements OnChanges {
       }
     });
     this.tagsService.setTagsData(tags)
+  }
+
+  private getMenuItems() {
+    return [
+      {
+        label: 'Widgets',
+        icon: 'pi pi-fw pi-palette',
+        disabled: this.file === null,
+        items: [
+          {
+            label: 'Nuevo',
+            icon: 'pi pi-fw pi-plus',
+            items: [
+              {
+                label: 'Línea',
+                items: [
+                  {
+                    label: 'Añadir',
+                    command: () => this.visualizationCompleted ? this.addLine() : undefined
+                  },
+                  {
+                    label: 'Eliminar',
+                    command: () => this.visualizationCompleted ? this.deleteLine() : undefined
+                  }
+                ]
+              },
+              {
+                label: 'Rectángulo',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Rectángulo') : undefined
+              },
+              {
+                label: 'Elipse',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Elipse') : undefined
+              },
+              {
+                label: 'Circulo',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Circulo') : undefined
+              },
+              {
+                label: 'Spline',
+                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Spline') : undefined
+              },
+            ]
+          },
+          {
+            label: 'Eliminar todos',
+            icon: 'pi pi-fw pi-trash',
+            command: () => this.visualizationCompleted ? this.deleteAllWidgets() : undefined
+          }
+        ]
+      },
+      {
+        label: 'Mostrar Tags',
+        icon: 'pi pi-fw pi-tags',
+        command: () => this.showTags(),
+        disabled: this.file?.type !== "application/dicom"
+
+      }
+    ];
   }
 
 }

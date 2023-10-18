@@ -1,1 +1,48 @@
-<p>tags works!</p>
+<p-table #dt [value]="tagsData" [rowHover]="true" [rows]="10"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 50,100]" [loading]="loading" [paginator]="true"
+    [currentPageReportTemplate]="'Showing {first} to {last} of {totalRecords} entries'" [filterDelay]="0"
+    [globalFilterFields]="['key', 'value']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')"
+                    placeholder="Global Search" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="key">TAG <p-sortIcon field="key"></p-sortIcon></th>
+            <th class="p-col-grow" pSortableColumn="value">Value <p-sortIcon field="value"></p-sortIcon></th>
+        </tr>
+        <tr>
+            <th>
+                <input pInputText type="text" (input)="dt.filter(getEventValue($event), 'key', 'startsWith')"
+                    placeholder="Search by Key" class="p-column-filter">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter(getEventValue($event), 'value', 'contains')"
+                    placeholder="Search by Value" class="p-column-filter">
+            </th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tag>
+        <tr class="p-selectable-row">
+            <td>
+                <span class="p-column-title">TAG</span>
+                {{ tag.key }}
+            </td>
+            <td>
+                <span class="p-column-title">Value</span>
+                {{ tag.value }}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="2">No tags found.</td>
+        </tr>
+    </ng-template>
+</p-table>

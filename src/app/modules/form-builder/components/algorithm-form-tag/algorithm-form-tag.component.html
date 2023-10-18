@@ -1,7 +1,6 @@
 <div [formGroup]="form" class="container">
     <label class="block text-gray-600 text-sm font-semibold mb-1" [attr.for]="tag.key">{{tag.label}}</label>
 
-    <b>Test: {{this.form.controls[this.tag.key].value}}</b>
     <ng-container [ngSwitch]="tag.controlType">
 
         <input *ngSwitchCase="'stringbox'" [id]="tag.key" type="text" pInputText [formControlName]="tag.key" />
@@ -12,9 +11,12 @@
             [formControlName]="tag.key"></p-inputNumber>
 
         <ng-container *ngSwitchCase="'visualizer'">
-            <p-button label="Subir archivo" (onClick)="this.openFileSelector()" icon="pi pi-upload"></p-button>
-            <input #inputFile type='file' [id]="tag.key" [formControlName]="tag.key" class="hidden"> 
-            <app-vtk-visualizer [file]="this.value"></app-vtk-visualizer>
+            <p-fileUpload #fileUpload mode="basic" [chooseLabel]="'Selecciona'"
+                accept="image/*,application/dicom"
+                [name]="tag.key"
+                (onSelect)="selectFile($event, fileUpload)"></p-fileUpload>
+            <b *ngIf="this.tag.value">{{this.tag.value.name}}</b>
+            <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
             
         </ng-container>
 

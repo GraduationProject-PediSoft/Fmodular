@@ -5,6 +5,7 @@ import { VtkVisualizerComponent } from './components/vtk-visualizer/vtk-visualiz
 import { MenubarModule } from 'primeng/menubar';
 import { TagsComponent } from './components/tags/tags.component'
 import { DialogService } from 'primeng/dynamicdialog';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { DialogService } from 'primeng/dynamicdialog';
   ],
   imports: [
     CommonModule,
-    MenubarModule
+    MenubarModule,
+    TableModule
   ],
   exports:[
     VtkVisualizerComponent
