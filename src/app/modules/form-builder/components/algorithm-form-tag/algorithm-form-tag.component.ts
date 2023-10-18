@@ -12,6 +12,7 @@ export class AlgorithmFormTagComponent {
   @Input() form!: FormGroup;
   get isValid() { return this.form.controls[this.tag.key].valid; }
   get isPristine(){ return this.form.controls[this.tag.key].pristine}
+  get value(){return this.form.controls[this.tag.key].value}
 
   @ViewChild("inputFile")
   inputFile!: ElementRef

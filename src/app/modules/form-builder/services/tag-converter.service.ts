@@ -56,7 +56,7 @@ export class TagConverterService {
         return new ImageTag({
           key: field.name,
           label:field.description,
-          required: true
+          required: true, 
         })
       }
     }

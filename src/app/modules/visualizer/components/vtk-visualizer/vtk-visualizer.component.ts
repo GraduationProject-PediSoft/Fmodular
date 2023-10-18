@@ -147,13 +147,10 @@ export class VtkVisualizerComponent implements OnChanges {
   }
 
   render() {
-    console.log("RENDERRR")
-    console.log(this.file)
-    if(this.file == null){
+    if(this.file == null ){
       return
     }
 
-    console.log(this.file)
     const reader = new FileReader();
 
     reader.onload = async (iEvent: any) => {
