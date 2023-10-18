@@ -19,6 +19,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { FormBuilderModule } from "../form-builder/form-builder.module";
+import { TabViewModule,  } from 'primeng/tabview';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
     declarations: [
@@ -31,7 +33,7 @@ import { FormBuilderModule } from "../form-builder/form-builder.module";
         HelpComponent
     ],
     providers: [
-        MessageService
+        MessageService,
     ],
     bootstrap: [HomeComponent],
     imports: [
@@ -46,7 +48,9 @@ import { FormBuilderModule } from "../form-builder/form-builder.module";
         FieldsetModule,
         StepsModule,
         DividerModule,
-        FormBuilderModule
+        FormBuilderModule,
+        TabViewModule,
+        MessageModule
     ]
 })
 export class HomeModule { }

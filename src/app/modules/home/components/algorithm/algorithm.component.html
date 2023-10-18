@@ -1,27 +1,58 @@
 <div class="container">
-    <form name="microPick" #microPick="ngForm" (ngSubmit)="getServiceInfo()">
-        <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un Servicio</label>
-    
-        <div class="cell">
-            <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="services"
-                [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
-            <p-button [loading]="loadingS" icon="pi pi-refresh" (onClick)="this.getServices()"></p-button>
-        </div>
-        <p-button label="Obtener información" [disabled]="!microPick.form.valid" type="submit"></p-button>
-    </form>
+    <p-tabView class="w-[90%] md:w-[70%]" [(activeIndex)]="activeIndex">
+        <p-tabPanel class="panel-container">
+            <ng-template pTemplate="header">
+                <i class="pi pi-server"></i>
+                <span>Servicio</span>
+            </ng-template>
+            <form name="microPick" #microPick="ngForm" (ngSubmit)="getServiceInfo()">
+                <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un Servicio</label>
+        
+                <div class="cell">
+                    <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="services"
+                        [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
+                    <p-button [loading]="loadingS" icon="pi pi-refresh" (onClick)="this.getServices()"></p-button>
+                </div>
+                <p-button label="Obtener información" [disabled]="!microPick.form.valid" type="submit"></p-button>
+            </form>
 
-    <p-divider class="w-full md:w-[65%]" *ngIf="this.algorithms.length !== 0"></p-divider>
-    
-    <form *ngIf="this.algorithms.length !== 0" name="algoPick" #algoPick="ngForm" (ngSubmit)="buildForm()">
-        <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
-    
-        <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms" optionLabel="name"
-                [(ngModel)]="selectedAlgorithm" [style]="{ width: '100%' }"></p-dropdown>
-        <p-button label="Seleccionar algoritmo" [disabled]="!algoPick.form.valid" type="submit"></p-button>
-    </form>
+            <p-message *ngIf="showServiceError" severity="error" text="No hay Servicios en el Sistema"></p-message>
+        </p-tabPanel>
+        
 
-    <p-divider class="w-full md:w-[65%]" *ngIf="this.buildFormBool===true"></p-divider>
+        <p-tabPanel class="panel-container" [disabled]="this.algorithms.length === 0">
+            <ng-template pTemplate="header">
+                <i class="pi pi-box"></i>
+                <span>Algoritmo</span>
+            </ng-template>
+            <form *ngIf="this.algorithms.length !== 0" name="algoPick" #algoPick="ngForm" (ngSubmit)="buildForm()">
+                <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
+        
+                <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms" optionLabel="name"
+                        [(ngModel)]="selectedAlgorithm" [style]="{ width: '100%' }"></p-dropdown>
+                <p-button label="Seleccionar algoritmo" [disabled]="!algoPick.form.valid" type="submit"></p-button>
+            </form>
 
-    <app-algorithm-form *ngIf="this.buildFormBool === true"  [fields]="this.selectedAlgorithm.args"> </app-algorithm-form>
+            <p-message *ngIf="showAlgorithmError" severity="error" text="No hay Algoritmos en el Servicio"></p-message>
+        </p-tabPanel>
+
+
+        <p-tabPanel class="panel-container" [disabled]="this.buildFormBool === false">
+            <ng-template pTemplate="header">
+                <i class="pi pi-sliders-h"></i>
+                <span>Parámetros</span>
+            </ng-template>
+            <app-algorithm-form *ngIf="this.buildFormBool === true"  [fields]="this.selectedAlgorithm.args"> </app-algorithm-form>
+        </p-tabPanel>
+
+        
+        <p-tabPanel class="panel-container">
+            <ng-template pTemplate="header">
+                <i class="pi pi-chart-bar"></i>
+                <span>Resultados</span>
+            </ng-template>
+            <b>TEST</b>
+        </p-tabPanel>
+    </p-tabView>
     
 </div>

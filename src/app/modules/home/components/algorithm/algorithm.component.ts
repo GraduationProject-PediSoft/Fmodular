@@ -11,16 +11,16 @@ import { finalize } from 'rxjs';
 export class AlgorithmComponent implements OnInit{
 
   selectedService: any
-
   services: string[] = []
-
   loadingS = false
-
   algorithms: any[] = []
-
-  selectedAlgorithm: any
-
+  selectedAlgorithm: any 
   buildFormBool = false
+  activeIndex = 0
+
+  //Error handling
+  showServiceError = false
+  showAlgorithmError = false
 
 
   constructor(private algorithmS: AlgorithmService, private messS: MessageService){}
@@ -34,6 +34,11 @@ export class AlgorithmComponent implements OnInit{
       .subscribe({
         next: v => {
           this.algorithms = v
+          if(this.algorithms.length > 0){
+            this.activeIndex = 1
+          }else{
+            this.showAlgorithmError = true
+          }
         },
         error: (e)=>{
           this.messS.add({
@@ -54,6 +59,9 @@ export class AlgorithmComponent implements OnInit{
     ).subscribe({
       next: (res: Iterable<string>) =>{
         this.services = [...res]
+        if(this.services.length === 0){
+          this.showServiceError = true
+        }
       },
       error: () =>{
         this.messS.add({
@@ -67,5 +75,6 @@ export class AlgorithmComponent implements OnInit{
   
   buildForm(){
     this.buildFormBool = true
+    this.activeIndex = 2
   }
 }
