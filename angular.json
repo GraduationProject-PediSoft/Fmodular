@@ -38,8 +38,10 @@
             "allowedCommonJsDependencies": [
               "seedrandom",
               "spark-md5",
-              "fast-deep-equal"
-            ]
+              "fast-deep-equal",
+              "webworker-promise",
+              "promise-file-reader"
+            ]              
           },
           "configurations": {
             "production": {

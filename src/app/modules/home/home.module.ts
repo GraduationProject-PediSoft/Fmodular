@@ -18,33 +18,35 @@ import { HelpComponent } from './components/help/help.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
+import { FormBuilderModule } from "../form-builder/form-builder.module";
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    AlgorithmComponent,
-    HomeComponent,
-    MainComponent,
-    UsersComponent,
-    HelpComponent
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    ButtonModule,
-    FormsModule,
-    DropdownModule,
-    VisualizerModule,
-    HttpClientModule,
-    ToastModule,
-    FieldsetModule,
-    StepsModule,
-    DividerModule
-  ],
-  providers:[
-    MessageService
-  ],
-  bootstrap: [HomeComponent]
+    declarations: [
+        HeaderComponent,
+        FooterComponent,
+        AlgorithmComponent,
+        HomeComponent,
+        MainComponent,
+        UsersComponent,
+        HelpComponent
+    ],
+    providers: [
+        MessageService
+    ],
+    bootstrap: [HomeComponent],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        ButtonModule,
+        FormsModule,
+        DropdownModule,
+        VisualizerModule,
+        HttpClientModule,
+        ToastModule,
+        FieldsetModule,
+        StepsModule,
+        DividerModule,
+        FormBuilderModule
+    ]
 })
 export class HomeModule { }

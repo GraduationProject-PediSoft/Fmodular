@@ -16,7 +16,7 @@ export class AlgorithmComponent implements OnInit{
 
   loadingS = false
 
-  algorithms: string[] = []
+  algorithms: any[] = []
 
   selectedAlgorithm: any
 

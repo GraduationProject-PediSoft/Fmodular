@@ -16,8 +16,12 @@
         <label class="block text-gray-600 text-sm font-semibold mb-1" for="algorithm">Selecciona un algoritmo</label>
     
         <p-dropdown [placeholder]="'Selecciona'" [required]="true" name="algorithm" [options]="algorithms" optionLabel="name"
-                [(ngModel)]="selectedService" [style]="{ width: '100%' }"></p-dropdown>
+                [(ngModel)]="selectedAlgorithm" [style]="{ width: '100%' }"></p-dropdown>
         <p-button label="Seleccionar algoritmo" [disabled]="!algoPick.form.valid" type="submit"></p-button>
     </form>
+
+    <p-divider class="w-full md:w-[65%]" *ngIf="this.buildFormBool===true"></p-divider>
+
+    <app-algorithm-form *ngIf="this.buildFormBool === true"  [fields]="this.selectedAlgorithm.args"> </app-algorithm-form>
     
 </div>

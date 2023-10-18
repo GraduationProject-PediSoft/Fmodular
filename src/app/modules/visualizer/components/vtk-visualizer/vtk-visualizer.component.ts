@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
 import '@kitware/vtk.js/Rendering';
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow';
@@ -6,8 +6,6 @@ import vtkRenderer from '@kitware/vtk.js/Rendering/Core/Renderer';
 import vtkOpenGLRenderWindow from '@kitware/vtk.js/Rendering/OpenGL/RenderWindow';
 import vtkRenderWindowInteractor from '@kitware/vtk.js/Rendering/Core/RenderWindowInteractor';
 
-import { Image, readDICOMTags, readImageArrayBuffer } from 'itk-wasm'
-import vtkITKHelper from '@kitware/vtk.js/Common/DataModel/ITKHelper';
 import vtkImageSlice from '@kitware/vtk.js/Rendering/Core/ImageSlice';
 import vtkImageMapper from '@kitware/vtk.js/Rendering/Core/ImageMapper';
 import vtkImageData from '@kitware/vtk.js/Common/DataModel/ImageData';
@@ -25,6 +23,9 @@ import { BehaviorCategory, ShapeBehavior } from '@kitware/vtk.js/Widgets/Widgets
 import { DialogService, DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TagsComponent } from '../tags/tags.component';
 import { TagsService } from '../../services/tags.service';
+import { readDICOMTags, readImageArrayBuffer } from 'itk-wasm';
+import vtkITKHelper from '@kitware/vtk.js/Common/DataModel/ITKHelper';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -32,14 +33,21 @@ import { TagsService } from '../../services/tags.service';
   templateUrl: './vtk-visualizer.component.html',
   styleUrls: ['./vtk-visualizer.component.scss']
 })
-export class VtkVisualizerComponent {
+export class VtkVisualizerComponent implements OnChanges {
   @ViewChild("visualizer", { static: true })
   visualizer!: ElementRef
 
-  readonly itemsMenu = [
+  //File to display
+  @Input()
+  file: File | null = null
+
+  isDicom: boolean = false //Indicates that the file is dicom 
+
+  readonly itemsMenu:MenuItem[] = [
     {
       label: 'Widgets',
       icon: 'pi pi-fw pi-palette',
+      disabled: this.file === null,
       items: [
         {
           label: 'Nuevo',
@@ -86,12 +94,14 @@ export class VtkVisualizerComponent {
     {
       label: 'Mostrar Tags',
       icon: 'pi pi-fw pi-tags',
-      command: () => this.showTags()
+      command: () => this.showTags(),
+      disabled: !this.isDicom
+      
     }
   ];
 
   constructor(private dialogService: DialogService,
-    private cdRef: ChangeDetectorRef, private tagsService: TagsService){}
+    private cdRef: ChangeDetectorRef, private tagsService: TagsService) { }
 
 
   //ImageVisualization -- One time for Image
@@ -128,11 +138,39 @@ export class VtkVisualizerComponent {
   dynamicDialog: boolean = false;
   tags: Map<string, string> = new Map<string, string>();
 
-  //File to display
-  @Input()
-  file: File | null = null
+  
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['file']){
+      this.render()
+    }
+  }
 
+  render() {
+    console.log("RENDERRR")
+    console.log(this.file)
+    if(this.file == null){
+      return
+    }
+
+    console.log(this.file)
+    const reader = new FileReader();
+
+    reader.onload = async (iEvent: any) => {
+      const arrayBuffer = iEvent.target.result;
+      const array = new Uint8Array(arrayBuffer);
+      const { image: itkImage, webWorker } = await readImageArrayBuffer(null,
+                array.buffer, this.file!.name, this.file!.type);
+      const { tags: tags } = await readDICOMTags(webWorker, this.file!)
+      this.getDICOMTags(tags)
+
+      const dicomImage = vtkITKHelper.convertItkToVtkImage(itkImage);
+
+      this.imageRendering(dicomImage)
+    };
+
+    reader.readAsArrayBuffer(this.file);
+  }
 
 
   showTags(): DynamicDialogRef {
@@ -147,7 +185,7 @@ export class VtkVisualizerComponent {
     return this.ref;
   }
 
-  onWidgetChangeSelection(selectedOption:string): void {
+  onWidgetChangeSelection(selectedOption: string): void {
 
     this.widgetManager.setRenderer(this.renderer)
     const rectangleWidget = vtkRectangleWidget.newInstance()
@@ -347,24 +385,23 @@ export class VtkVisualizerComponent {
 
   }
 
-  //TODO Fix broken dicom-tag-dictionary
-  // getDICOMTags(tags: Map<string, string>): void {
-  //   const tagsMap = new Map<string, string>()
-  //   var dicomDataDictionary = require('dicom-data-dictionary');
-  //   var dictionary = new dicomDataDictionary.DataElementDictionary();
-  //   tags.forEach((value, key) => {
-  //     const newKey = key.replace(/\|/g, '')
-  //     tagsMap.set(newKey, value)
-  //   })
+  getDICOMTags(tags: Map<string, string>): void {
+    const tagsMap = new Map<string, string>()
+    const dictionary = require('@iwharris/dicom-data-dictionary');
+    tags.forEach((value, key) => {
+      const newKey = key.replace(/(\d+)\|(\d+)/, '($1,$2)');
+      tagsMap.set(newKey, value)
+    })
 
-  //   tags.clear()
-  //   tagsMap.forEach((value, key) => {
-  //     var element = dictionary.lookup(key);
-  //     if (element) {
-  //       tags.set(element.name, value);
-  //     }
-  //   })
-  //   this.tagsService.setTagsData(tags)
-  // }
+    tags.clear()
+    tagsMap.forEach((value, key) => {
+      const element = dictionary.get_element(key);
+
+      if (element && element.keyword) {
+        tags.set(element.keyword, value);
+      }
+    });
+    this.tagsService.setTagsData(tags)
+  }
 
 }
