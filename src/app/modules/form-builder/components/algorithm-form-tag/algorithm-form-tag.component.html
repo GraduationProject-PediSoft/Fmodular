@@ -16,7 +16,7 @@
                 [name]="tag.key"
                 (onSelect)="selectFile($event, fileUpload)"></p-fileUpload>
             <b *ngIf="this.tag.value">{{this.tag.value.name}}</b>
-            <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
+            <app-vtk-visualizer *ngIf="this.isValid" [file]="tag.value"></app-vtk-visualizer>
             
         </ng-container>
 

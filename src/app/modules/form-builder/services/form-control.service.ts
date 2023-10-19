@@ -34,7 +34,7 @@ export class FormControlService {
   }
 
   private buildQuery(algorithm: string, param: any, fields: any) {
-    if (param.ofType.fields === null) {
+    if (param.ofType.fields === null || param.ofType.fields.length === 0) {
       return gql`
         query ExecuteAlgorithm($var: ${fields.type.ofType.name}!){
           ${algorithm}(${fields.name}: $var)

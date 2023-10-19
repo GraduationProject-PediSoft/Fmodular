@@ -16,10 +16,10 @@ export class ResultViewComponent {
   constructor(private tg: TagConverterService){}
 
   ngOnInit(): void {
-    this.tags = this.tg.fromResponseToTag(this.res)
+    this.buildResponse()
   }
 
   private buildResponse(){
-    
+    this.tags = this.tg.fromResponseToTag(this.res)
   }
 }
