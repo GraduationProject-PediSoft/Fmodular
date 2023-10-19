@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlgorithmService } from '../../services/algorithm.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { TabIndex } from './internal/menucontroller.enum';
 
 @Component({
   selector: 'app-algorithm',
@@ -16,7 +17,9 @@ export class AlgorithmComponent implements OnInit{
   algorithms: any[] = []
   selectedAlgorithm: any 
   buildFormBool = false
-  activeIndex = 0
+  activeIndex = TabIndex.SERVICE
+
+  result: any
 
   //Error handling
   showServiceError = false
@@ -35,7 +38,7 @@ export class AlgorithmComponent implements OnInit{
         next: v => {
           this.algorithms = v
           if(this.algorithms.length > 0){
-            this.activeIndex = 1
+            this.activeIndex = TabIndex.ALGORITHM
           }else{
             this.showAlgorithmError = true
           }
@@ -75,6 +78,11 @@ export class AlgorithmComponent implements OnInit{
   
   buildForm(){
     this.buildFormBool = true
-    this.activeIndex = 2
+    this.activeIndex = TabIndex.PARAMS
+  }
+
+  onResultReceived(result: any){
+    this.result = result
+    this.activeIndex = TabIndex.RESULT
   }
 }

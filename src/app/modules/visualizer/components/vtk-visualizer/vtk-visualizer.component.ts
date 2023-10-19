@@ -26,6 +26,12 @@ import { TagsService } from '../../services/tags.service';
 import { readDICOMTags, readImageArrayBuffer } from 'itk-wasm';
 import vtkITKHelper from '@kitware/vtk.js/Common/DataModel/ITKHelper';
 import { MenuItem } from 'primeng/api';
+import { Applier } from 'src/app/modules/result/interfaces/Applier.interface';
+import vtkPoints from '@kitware/vtk.js/Common/Core/Points';
+import vtkCellArray from '@kitware/vtk.js/Common/Core/CellArray';
+import vtkPolyData from '@kitware/vtk.js/Common/DataModel/PolyData';
+import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
+import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 
 
 @Component({
@@ -33,7 +39,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './vtk-visualizer.component.html',
   styleUrls: ['./vtk-visualizer.component.scss']
 })
-export class VtkVisualizerComponent implements OnChanges {
+export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   //Visualizer container
   @ViewChild("visualizer", { static: true })
   visualizer!: ElementRef
@@ -41,6 +47,10 @@ export class VtkVisualizerComponent implements OnChanges {
   //File to display
   @Input()
   file: File | null = null
+
+  //Polydata points to apply after a result
+  @Input()
+  applierData: any
 
   //Items as a stream 
   itemsMenu: MenuItem[] = []
@@ -107,6 +117,38 @@ export class VtkVisualizerComponent implements OnChanges {
   constructor(private dialogService: DialogService,
     private cdRef: ChangeDetectorRef, private tagsService: TagsService) { }
 
+  apply(data: any): void {
+    const contours = JSON.parse(data);
+    const points = vtkPoints.newInstance();
+    const lines = vtkCellArray.newInstance();
+
+    // Agregar puntos y líneas al vtkPolyData
+    for (const contour of contours) {
+      const lineIndices: any = [];
+      for (const point of contour) {
+        const pointId = points.insertNextPoint(point[1], point[0], 0);
+        lineIndices.push(pointId);
+      }
+      lines.insertNextCell(lineIndices);
+    }
+
+    const polyData = vtkPolyData.newInstance();
+    polyData.setPoints(points);
+    polyData.setLines(lines);
+
+    const mapper = vtkMapper.newInstance();
+    mapper.setInputData(polyData);
+
+    const actor = vtkActor.newInstance();
+    actor.setMapper(mapper);
+
+    const actorProperty = actor.getProperty();
+    actorProperty.setColor(1, 0, 0);
+
+    this.renderer.addActor(actor)
+    this.renderWindow.render()
+  }
+
 
 
 
@@ -141,8 +183,6 @@ export class VtkVisualizerComponent implements OnChanges {
 
   //Tags Dialog
   private ref: DynamicDialogRef | undefined;
-  private dynamicDialog: boolean = false;
-  private tags: Map<string, string> = new Map<string, string>();
 
 
 
@@ -336,6 +376,7 @@ export class VtkVisualizerComponent implements OnChanges {
     this.openGlRenderWindow.setContainer(this.visualizer.nativeElement)
     this.openGlRenderWindow.setSize(1200, 680)
     this.renderWindow.addView(this.openGlRenderWindow)
+    this.renderer.setBackground(203 / 255, 213 / 255, 225 / 255)
 
     this.actor.setMapper(this.mapper)
     this.renderer.addActor(this.actor)
@@ -411,63 +452,5 @@ export class VtkVisualizerComponent implements OnChanges {
     this.tagsService.setTagsData(tags)
   }
 
-  private getMenuItems() {
-    return [
-      {
-        label: 'Widgets',
-        icon: 'pi pi-fw pi-palette',
-        disabled: this.file === null,
-        items: [
-          {
-            label: 'Nuevo',
-            icon: 'pi pi-fw pi-plus',
-            items: [
-              {
-                label: 'Línea',
-                items: [
-                  {
-                    label: 'Añadir',
-                    command: () => this.visualizationCompleted ? this.addLine() : undefined
-                  },
-                  {
-                    label: 'Eliminar',
-                    command: () => this.visualizationCompleted ? this.deleteLine() : undefined
-                  }
-                ]
-              },
-              {
-                label: 'Rectángulo',
-                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Rectángulo') : undefined
-              },
-              {
-                label: 'Elipse',
-                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Elipse') : undefined
-              },
-              {
-                label: 'Circulo',
-                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Circulo') : undefined
-              },
-              {
-                label: 'Spline',
-                command: () => this.visualizationCompleted ? this.onWidgetChangeSelection('Spline') : undefined
-              },
-            ]
-          },
-          {
-            label: 'Eliminar todos',
-            icon: 'pi pi-fw pi-trash',
-            command: () => this.visualizationCompleted ? this.deleteAllWidgets() : undefined
-          }
-        ]
-      },
-      {
-        label: 'Mostrar Tags',
-        icon: 'pi pi-fw pi-tags',
-        command: () => this.showTags(),
-        disabled: this.file?.type !== "application/dicom"
-
-      }
-    ];
-  }
 
 }

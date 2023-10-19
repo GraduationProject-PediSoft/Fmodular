@@ -7,6 +7,7 @@ import { BaseTag } from '../result-tags/base-tag';
 export class TagConverterService {
 
   fromResponseToTag(res: any): BaseTag<any>[]{
+    console.log(res)
     return []
   }
 }

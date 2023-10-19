@@ -47,16 +47,17 @@
                 [param]="this.selectedAlgorithm.type"
                 [service]="this.selectedService"
                 [algorithm]="this.selectedAlgorithm.name"
+                (result)="onResultReceived($event)"
                 > </app-algorithm-form>
         </p-tabPanel>
 
 
-        <p-tabPanel class="panel-container" [disabled]="true">
+        <p-tabPanel class="panel-container" [disabled]="this.result === undefined">
             <ng-template pTemplate="header">
                 <i class="pi pi-chart-bar"></i>
                 <span>Resultados</span>
             </ng-template>
-            <app-result-view></app-result-view>
+            <app-result-view [res]="result"></app-result-view>
         </p-tabPanel>
     </p-tabView>
     

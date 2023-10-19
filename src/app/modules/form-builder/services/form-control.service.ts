@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BaseTag } from '../reactive-tags/base-tag';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
-import { InMemoryCache } from '@apollo/client/core';
+import { ApolloQueryResult, InMemoryCache } from '@apollo/client/core';
 import { environment } from 'src/environments/environment';
 import { createUploadLink } from 'apollo-upload-client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,20 +54,16 @@ export class FormControlService {
       
 
   }
-  sendQuery(form: FormGroup, service: string, algorithm: string, param: any, fields: any) {
+  sendQuery(form: FormGroup, service: string
+      , algorithm: string, param: any, fields: any): Observable<ApolloQueryResult<unknown>> {
     this.genNewClient(service)
-    this.apollo.query({
+    return this.apollo.query({
       query: this.buildQuery(algorithm, param, fields[0]),
       variables: {
         var: form.value
       },
       context: {
         useMultipart: true
-      }
-    }).subscribe({
-      next: v => console.log(v),
-      error: (e) => {
-        console.error(e)
       }
     })
   }

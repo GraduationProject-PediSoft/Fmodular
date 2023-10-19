@@ -14,16 +14,17 @@ export class AlgorithmFormTagComponent {
   @Input() tag!: BaseTag<any>;
   @Input() form!: FormGroup;
   get isValid() { return this.form.controls[this.tag.key].valid; }
-  get isPristine(){ return this.form.controls[this.tag.key].pristine}
-  get value(){return this.form.controls[this.tag.key].value}
+  get isPristine() { return this.form.controls[this.tag.key].pristine }
+  get value() { return this.form.controls[this.tag.key].value }
 
-  @ViewChild("inputFile")
-  inputFile!: ElementRef
+  protected readonly ACCEPTED_TYPES = ["image/jpg", "image/png","image/jpeg","application/dicom"]
 
   protected selectFile($event: FileUploadHandlerEvent, id: any) {
-    const file = $event.files[0]
-    this.tag.value = file
-    this.form.controls[this.tag.key].setValue(file);
+    const file: File = $event.files[0]
+    if(this.ACCEPTED_TYPES.includes(file.type)){
+      this.tag.value = file
+      this.form.controls[this.tag.key].setValue(file);
+    }
     id.clear()
   }
 }
