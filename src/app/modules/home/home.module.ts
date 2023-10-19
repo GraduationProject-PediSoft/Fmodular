@@ -21,6 +21,7 @@ import { DividerModule } from 'primeng/divider';
 import { FormBuilderModule } from "../form-builder/form-builder.module";
 import { TabViewModule,  } from 'primeng/tabview';
 import { MessageModule } from 'primeng/message';
+import { ResultModule } from '../result/result.module';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { MessageModule } from 'primeng/message';
         DividerModule,
         FormBuilderModule,
         TabViewModule,
-        MessageModule
+        MessageModule,
+        ResultModule
     ]
 })
 export class HomeModule { }

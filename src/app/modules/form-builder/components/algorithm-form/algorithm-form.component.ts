@@ -14,6 +14,15 @@ export class AlgorithmFormComponent implements OnInit, OnChanges{
   @Input()
   fields:any[] | null = []
 
+  @Input()
+  param: any  
+  
+  @Input()
+  service: string = ""
+
+  @Input()
+  algorithm: string = ""
+
   tags: BaseTag<any>[] | null = []
   
   form!: FormGroup;
@@ -36,6 +45,6 @@ export class AlgorithmFormComponent implements OnInit, OnChanges{
   }
 
   sendRequest(){
-    console.log(JSON.stringify(this.form.getRawValue()));
+    this.tcs.sendQuery(this.form,this.service, this.algorithm, this.param, this.fields)
   }
 }

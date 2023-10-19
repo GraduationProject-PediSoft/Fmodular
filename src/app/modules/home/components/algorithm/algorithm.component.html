@@ -42,16 +42,21 @@
                 <i class="pi pi-sliders-h"></i>
                 <span>Parámetros</span>
             </ng-template>
-            <app-algorithm-form *ngIf="this.buildFormBool === true"  [fields]="this.selectedAlgorithm.args"> </app-algorithm-form>
+            <app-algorithm-form *ngIf="this.buildFormBool === true"  
+                [fields]="this.selectedAlgorithm.args"
+                [param]="this.selectedAlgorithm.type"
+                [service]="this.selectedService"
+                [algorithm]="this.selectedAlgorithm.name"
+                > </app-algorithm-form>
         </p-tabPanel>
 
-        
-        <p-tabPanel class="panel-container">
+
+        <p-tabPanel class="panel-container" [disabled]="true">
             <ng-template pTemplate="header">
                 <i class="pi pi-chart-bar"></i>
                 <span>Resultados</span>
             </ng-template>
-            <b>TEST</b>
+            <app-result-view></app-result-view>
         </p-tabPanel>
     </p-tabView>
     

@@ -1,0 +1,29 @@
+<!-- <div class="container">
+    <label class="block text-gray-600 text-sm font-semibold mb-1" [attr.for]="tag.key">{{tag.label}}</label>
+
+    <ng-container [ngSwitch]="tag.type">
+
+        <input *ngSwitchCase="'stringbox'" [id]="tag.key" type="text" pInputText [formControlName]="tag.key" />
+        <p-inputNumber *ngSwitchCase="'intbox'" [inputId]="tag.key" [formControlName]="tag.key"></p-inputNumber>
+        <p-checkbox *ngSwitchCase="'boolbox'" [formControlName]="tag.key" [value]="tag.label"
+            [inputId]="tag.key"></p-checkbox>
+        <p-inputNumber *ngSwitchCase="'floatbox'" mode="decimal" [inputId]="tag.key"
+            [formControlName]="tag.key"></p-inputNumber>
+
+        <ng-container *ngSwitchCase="'visualizer'">
+            <p-fileUpload #fileUpload mode="basic" [chooseLabel]="'Selecciona'"
+                accept="image/*,application/dicom"
+                [name]="tag.key"
+                (onSelect)="selectFile($event, fileUpload)"></p-fileUpload>
+            <b *ngIf="this.tag.value">{{this.tag.value.name}}</b>
+            <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
+            
+        </ng-container>
+
+
+        <p-message *ngSwitchDefault severity="error" text="Unsupported TAG"></p-message>
+    </ng-container>
+    <p-message *ngIf="!isValid && !isPristine" severity="error" text="Error"></p-message>
+
+
+</div> -->

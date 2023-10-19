@@ -2,40 +2,43 @@ import { gql } from "apollo-angular";
 
 export const introspectionQuery = gql`
 query IntrospectionQuery {
-  __schema {
-    queryType {
-        fields{
-            name
-            # Esto es para el retorno
-            type{
-                ofType{
-                    name
-                    description
-                }
-            }
-            args{
+    __schema {
+        queryType {
+            fields {
                 name
-                type{
-                    ofType{
+                type {
+                    ofType {
                         name
                         description
-                        inputFields{
+                        fields {
+                            name
+                            type {
+                                kind
+                            }
+                        }
+                    }
+                }
+                args {
+                    name
+                    type {
+                        ofType {
                             name
                             description
-                            type{
-                                ofType{
-                                    name
-                                    description
+                            inputFields {
+                                name
+                                description
+                                type {
+                                    ofType {
+                                        name
+                                        description
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
         }
-    }
-  }
+    }   
 }
-
 `
