@@ -166,12 +166,6 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   private styleImage = vtkInteractorStyleImage.newInstance();
   private imageInteractor = vtkRenderWindowInteractor.newInstance();
 
-  //Response Visualization
-  private renderWindowResponse = vtkRenderWindow.newInstance()
-  private rendererResponse = vtkRenderer.newInstance()
-  private openGlRenderWindowResponse = vtkOpenGLRenderWindow.newInstance()
-  private actorResponse = vtkImageSlice.newInstance()
-  private mapperResponse = vtkImageMapper.newInstance()
 
   //Widgets
   private newLine: any
@@ -352,19 +346,6 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
     this.widgetManager.removeWidgets()
   }
 
-  responseVisualization(image: vtkImageData): void {
-
-    this.renderWindowResponse.addRenderer(this.rendererResponse)
-
-    this.openGlRenderWindowResponse.setContainer(this.visualizer.nativeElement)
-    this.openGlRenderWindowResponse.setSize(500, 500)
-    this.renderWindowResponse.addView(this.openGlRenderWindowResponse)
-
-    this.actorResponse.setMapper(this.mapperResponse)
-    this.rendererResponse.addActor(this.actorResponse)
-    this.mapperResponse.setInputData(image)
-
-  }
 
   imageRendering(image: vtkImageData): void {
 
@@ -408,18 +389,6 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
         button: 3,
       });
     this.style.addMouseManipulator(mouseZooming);
-
-
-    //Ajustar ventana y nivel para mejorar visualización de Imágenes
-
-    const imageProperty = this.actor.getProperty();
-    const scalarRange = image.getPointData().getScalars().getRange();
-    const window = scalarRange[1] - scalarRange[0];
-    const level = (scalarRange[0] + scalarRange[1]) / 2;
-
-    imageProperty.setColorLevel(level);
-    imageProperty.setColorWindow(window);
-
 
     // Se ajusta la cámara para que las imágenes tengan la orientación adecuada
 

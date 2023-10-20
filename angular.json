@@ -40,7 +40,8 @@
               "spark-md5",
               "fast-deep-equal",
               "webworker-promise",
-              "promise-file-reader"
+              "promise-file-reader",
+              "globalthis"
             ]              
           },
           "configurations": {
