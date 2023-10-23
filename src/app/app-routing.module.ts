@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {path: '', redirectTo: "login", pathMatch: 'full'},
-  {path: "login", loadChildren: ()=> import('src/app/modules/login/login.module').then(m => m.LoginModule)},
-  {path: "home", loadChildren: ()=> import('src/app/modules/home/home.module').then(m => m.HomeModule)},
+  {path: "login", loadChildren: ()=> import('src/app/modules/login/login.module').then(m => m.LoginModule), title: "Login"},
+  {path: "home", loadChildren: ()=> import('src/app/modules/home/home.module').then(m => m.HomeModule), title: "Inicio"},
   {path: "**", loadChildren: ()=> import('src/app/modules/error/error.module').then(m => m.ErrorModule)}
 ];
 

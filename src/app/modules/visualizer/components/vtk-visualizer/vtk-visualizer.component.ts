@@ -150,8 +150,6 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   }
 
 
-
-
   //ImageVisualization -- One time for Image
   private renderWindow = vtkRenderWindow.newInstance()
   private renderer = vtkRenderer.newInstance()

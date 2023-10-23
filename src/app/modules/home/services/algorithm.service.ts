@@ -7,13 +7,13 @@ import { Apollo } from 'apollo-angular';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { introspectionQuery } from 'src/app/shared/introspection.graphql';
+import { IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlgorithmService {
   //https://atheros.ai/blog/graphql-introspection-and-introspection-queries
-  private readonly QUERY_TYPE = "Query"
 
   constructor(private http: HttpClient, private apollo: Apollo, private httpLink: HttpLink){}
 
@@ -21,11 +21,12 @@ export class AlgorithmService {
     return this.http.get<Iterable<string>>(environment.backendApi+"/explorer/")
   }
 
-  getServiceInfo(path: string): Observable<any>{
+  getServiceInfo(path: string): Observable<IntrospectionQueryResponse>{
     this.genNewClient(path)
-    return this.apollo.query<any>({query: introspectionQuery})
+
+    return this.apollo.query<IntrospectionQueryResponse>({query: introspectionQuery})
       .pipe(
-        map(v => v.data.__schema.queryType.fields)
+        map(v => v.data )
       )
   }
 

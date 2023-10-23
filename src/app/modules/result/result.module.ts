@@ -6,7 +6,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { VisualizerModule } from '../visualizer/visualizer.module';
-
+import { TableModule } from 'primeng/table';
+import { MessageModule } from 'primeng/message';
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
     InputTextModule,
     CheckboxModule,
     InputNumberModule,
-    VisualizerModule
+    VisualizerModule,
+    TableModule,
+    MessageModule
   ],
   exports:[
     ResultViewComponent

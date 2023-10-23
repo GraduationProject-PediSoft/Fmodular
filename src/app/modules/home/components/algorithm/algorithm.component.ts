@@ -3,6 +3,7 @@ import { AlgorithmService } from '../../services/algorithm.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { TabIndex } from './internal/menucontroller.enum';
+import { IntrospectionArgsType, IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
 
 @Component({
   selector: 'app-algorithm',
@@ -14,8 +15,8 @@ export class AlgorithmComponent implements OnInit{
   selectedService: any
   services: string[] = []
   loadingS = false
-  algorithms: any[] = []
-  selectedAlgorithm: any 
+  algorithms: IntrospectionFieldsType[] = []
+  selectedAlgorithm: IntrospectionFieldsType | null = null 
   buildFormBool = false
   activeIndex = TabIndex.SERVICE
 
@@ -35,8 +36,8 @@ export class AlgorithmComponent implements OnInit{
   getServiceInfo(){
     this.algorithmS.getServiceInfo(this.selectedService)
       .subscribe({
-        next: v => {
-          this.algorithms = v
+        next: (v:IntrospectionQueryResponse) => { 
+          this.algorithms = v.__schema.queryType.fields as IntrospectionFieldsType[];
           if(this.algorithms.length > 0){
             this.activeIndex = TabIndex.ALGORITHM
           }else{
@@ -83,6 +84,7 @@ export class AlgorithmComponent implements OnInit{
 
   onResultReceived(result: any){
     this.result = result
+    console.log(this.result !== undefined && this.selectedAlgorithm !== null)
     this.activeIndex = TabIndex.RESULT
   }
 }

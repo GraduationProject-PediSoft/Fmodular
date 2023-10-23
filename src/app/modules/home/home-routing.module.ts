@@ -9,9 +9,9 @@ import { HelpComponent } from "./components/help/help.component";
 const routes: Routes = [
     {path:"", component: HomeComponent, children:[
         {path:"", component: MainComponent},
-        {path:"algorithm", component: AlgorithmComponent},
-        {path:"users", component: UsersComponent},
-        {path:"help", component: HelpComponent},
+        {path:"algorithm", component: AlgorithmComponent, title: "Algoritmos"},
+        {path:"users", component: UsersComponent, title: "Usuarios"},
+        {path:"help", component: HelpComponent, title: "Ayuda"},
     ]}
 ]
 

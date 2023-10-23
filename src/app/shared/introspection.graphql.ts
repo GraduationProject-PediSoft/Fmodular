@@ -14,6 +14,9 @@ query IntrospectionQuery {
                             name
                             type {
                                 kind
+                                ofType{
+                                    name
+                                }
                             }
                         }
                     }

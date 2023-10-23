@@ -5,17 +5,18 @@ import { StringTag } from '../reactive-tags/string-tag';
 import { FloatTag } from '../reactive-tags/float-tag';
 import { BoolTag } from '../reactive-tags/bool-tag';
 import { ImageTag } from '../reactive-tags/image-tag';
+import { IntrospectionArgsType } from 'src/app/shared/introspection.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagConverterService {
 
-  fromfieldsToTag(fields: any): BaseTag<any>[]{
+  fromfieldsToTag(fields: IntrospectionArgsType[]): BaseTag<any>[]{
     const tags: BaseTag<any>[] = []
 
     //Solo soportado un input de dato
-    fields[0].type.ofType.inputFields.forEach(e => {
+    fields[0].type.ofType?.inputFields.forEach(e => {
       tags.push(this.tagFactory(e))
     });
 

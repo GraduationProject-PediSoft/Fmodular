@@ -6,6 +6,7 @@ import { TagConverterService } from '../../services/tag-converter.service';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
+import { IntrospectionArgsType, IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 
 @Component({
   selector: 'app-algorithm-form',
@@ -15,10 +16,10 @@ import { finalize } from 'rxjs';
 export class AlgorithmFormComponent implements OnInit, OnChanges{
 
   @Input()
-  fields:any[] | null = []
+  fields:IntrospectionArgsType[] = []
 
   @Input()
-  param: any  
+  param!: IntrospectionReturnType  
   
   @Input()
   service: string = ""
@@ -27,7 +28,7 @@ export class AlgorithmFormComponent implements OnInit, OnChanges{
   algorithm: string = ""
 
   @Output()
-  result = new EventEmitter<any>()
+  result = new EventEmitter<ApolloQueryResult<any>>()
 
   tags: BaseTag<any>[] | null = []
   

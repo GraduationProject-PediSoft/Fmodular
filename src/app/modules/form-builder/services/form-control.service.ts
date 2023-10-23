@@ -6,6 +6,7 @@ import { ApolloQueryResult, InMemoryCache } from '@apollo/client/core';
 import { environment } from 'src/environments/environment';
 import { createUploadLink } from 'apollo-upload-client';
 import { Observable } from 'rxjs';
+import { IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,8 @@ export class FormControlService {
     }))
   }
 
-  private buildQuery(algorithm: string, param: any, fields: any) {
-    if (param.ofType.fields === null || param.ofType.fields.length === 0) {
+  private buildQuery(algorithm: string, param: IntrospectionReturnType, fields: any) {
+    if (param.ofType?.fields === null || param.ofType?.fields.length === 0) {
       return gql`
         query ExecuteAlgorithm($var: ${fields.type.ofType.name}!){
           ${algorithm}(${fields.name}: $var)
@@ -45,7 +46,7 @@ export class FormControlService {
       return gql`
         query ExecuteAlgorithm($var: ${fields.type.ofType.name}!){
           ${algorithm}(${fields.name}: $var){
-            ${param.ofType.fields?.map(e => e.name).join('\n')}
+            ${param.ofType?.fields?.map(e => e?.name).join('\n')}
           }
         }
       `
@@ -55,7 +56,7 @@ export class FormControlService {
 
   }
   sendQuery(form: FormGroup, service: string
-      , algorithm: string, param: any, fields: any): Observable<ApolloQueryResult<unknown>> {
+      , algorithm: string, param: IntrospectionReturnType, fields: any): Observable<ApolloQueryResult<unknown>> {
     this.genNewClient(service)
     return this.apollo.query({
       query: this.buildQuery(algorithm, param, fields[0]),

@@ -8,8 +8,26 @@
         <p-inputNumber *ngSwitchCase="'floatbox'" mode="decimal" [id]="tag.key" [useGrouping]="false" [disabled]="true"> </p-inputNumber>
         <p-inputNumber *ngSwitchCase="'intbox'" [id]="tag.key" [useGrouping]="false" [disabled]="true"> </p-inputNumber>
 
-        <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
+        <ng-container *ngSwitchCase="'visualizer'">
+            <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
+        </ng-container>
 
+        <p-table *ngSwitch="'json'" [value]="tag.value" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Clave</th>
+                    <th>Valor</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-json>
+                <tr>
+                    <td>{{ json }}</td>
+                    <td>{{ tag.value[json] }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-message *ngSwitchDefault severity="error" text="Unsupported TAG"></p-message>
     </ng-container>
 
 

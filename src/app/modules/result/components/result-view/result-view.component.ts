@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BaseTag } from '../../result-tags/base-tag';
 import { TagConverterService } from '../../services/tag-converter.service';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { IntrospectionQueryResponse, IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 
 @Component({
   selector: 'app-result-view',
@@ -9,7 +11,13 @@ import { TagConverterService } from '../../services/tag-converter.service';
 })
 export class ResultViewComponent implements OnChanges {
   @Input()
-  res: any
+  res!: ApolloQueryResult<any>
+
+  @Input()
+  resIntrospection!: IntrospectionReturnType
+
+  @Input()
+  algorithm: string = ""
 
   tags: BaseTag<any>[] | null = []
 
@@ -26,7 +34,7 @@ export class ResultViewComponent implements OnChanges {
 
   private buildResponse(){
  
-    this.tags = this.tg.fromResponseToTag(this.res)
+    this.tags = this.tg.fromResponseToTag(this.res, this.algorithm, this.resIntrospection)
   
   }
 }

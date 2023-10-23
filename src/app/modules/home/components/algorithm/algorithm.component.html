@@ -42,7 +42,7 @@
                 <i class="pi pi-sliders-h"></i>
                 <span>Parámetros</span>
             </ng-template>
-            <app-algorithm-form *ngIf="this.buildFormBool === true"  
+            <app-algorithm-form *ngIf="this.buildFormBool === true && this.selectedAlgorithm !== null"  
                 [fields]="this.selectedAlgorithm.args"
                 [param]="this.selectedAlgorithm.type"
                 [service]="this.selectedService"
@@ -57,7 +57,10 @@
                 <i class="pi pi-chart-bar"></i>
                 <span>Resultados</span>
             </ng-template>
-            <app-result-view [res]="result"></app-result-view>
+            <app-result-view *ngIf="this.result !== undefined && this.selectedAlgorithm !== null" 
+                [res]="result" [algorithm]="this.selectedAlgorithm.name" 
+                [resIntrospection]="this.selectedAlgorithm.type">
+            </app-result-view>
         </p-tabPanel>
     </p-tabView>
     
