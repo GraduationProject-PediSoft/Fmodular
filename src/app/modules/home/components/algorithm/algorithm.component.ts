@@ -84,7 +84,6 @@ export class AlgorithmComponent implements OnInit{
 
   onResultReceived(result: any){
     this.result = result
-    console.log(this.result !== undefined && this.selectedAlgorithm !== null)
     this.activeIndex = TabIndex.RESULT
   }
 }

@@ -12,7 +12,6 @@ export class ResultTagComponent implements OnInit{
 
   @Input()
   tag!: BaseTag<any>
-
   constructor(private downloader: ImageDownloaderService){}
 
   ngOnInit(): void {

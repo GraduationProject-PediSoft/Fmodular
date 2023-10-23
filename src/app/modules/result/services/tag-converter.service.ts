@@ -27,7 +27,6 @@ export class TagConverterService {
 
   //Queries only return one data type, at version one, not nested types are supported
   fromResponseToTag(res: ApolloQueryResult<any>, algorithm: string, introspectionReturn: IntrospectionReturnType): BaseTag<any>[]{
-    console.log(res)
     const tags:BaseTag<any>[] = []
     const data = res.data[algorithm]
     // There are special types we defined, __typename could have them. That types are:
@@ -55,7 +54,9 @@ export class TagConverterService {
         return new ImageTag(tagData)
       }
       case "JSON":{
-          return new JsonTag({value: JSON.parse(data[name]), __typename: data.__typename, key: name})
+        const json = JSON.parse(data[name])
+        const map = Object.keys(json).map(key => ({ key: key, value: json[key] }));
+        return new JsonTag({value: map, __typename: data.__typename, key: name})
       }
     }
 
