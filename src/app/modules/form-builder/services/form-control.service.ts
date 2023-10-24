@@ -7,13 +7,14 @@ import { environment } from 'src/environments/environment';
 import { createUploadLink } from 'apollo-upload-client';
 import { Observable } from 'rxjs';
 import { IntrospectionReturnType } from 'src/app/shared/introspection.interface';
+import { ShareDataResultService } from 'src/app/shared/services/share-data-result.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormControlService {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private shareData: ShareDataResultService) { }
 
   toFormGroup(tags: BaseTag<any>[]) {
     const group: any = {};
@@ -58,6 +59,9 @@ export class FormControlService {
   sendQuery(form: FormGroup, service: string
       , algorithm: string, param: IntrospectionReturnType, fields: any): Observable<ApolloQueryResult<unknown>> {
     this.genNewClient(service)
+    if(param.ofType?.name === "PolyData"){
+      this.setData(form.get("file")?.value)
+    }
     return this.apollo.query({
       query: this.buildQuery(algorithm, param, fields[0]),
       variables: {
@@ -67,5 +71,11 @@ export class FormControlService {
         useMultipart: true
       }
     })
+  }
+
+  //This method shared data with a common service with ResultComponent
+  //In this prototype is only for Polydata but could be for anything
+  private setData(data: any){
+    this.shareData.addData("file", data)
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 import '@kitware/vtk.js/Rendering';
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow';
@@ -39,7 +39,7 @@ import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
   templateUrl: './vtk-visualizer.component.html',
   styleUrls: ['./vtk-visualizer.component.scss']
 })
-export class VtkVisualizerComponent implements OnChanges, Applier<any> {
+export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
   //Visualizer container
   @ViewChild("visualizer", { static: true })
   visualizer!: ElementRef
@@ -177,7 +177,11 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   private ref: DynamicDialogRef | undefined;
 
 
-
+  ngOnInit(): void {
+    if(typeof this.applierData !== 'undefined'){
+      this.apply(this.applierData)
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['file']) {
       this.itemsMenu = this.items

@@ -8,6 +8,8 @@ import { FloatTag } from '../result-tags/float-tag';
 import { IntTag } from '../result-tags/int-tag';
 import { StringTag } from '../result-tags/string-tag';
 import { JsonTag } from '../result-tags/json-tag';
+import { ImagePolyData } from '../result-tags/image-polydata-tag';
+import { ShareDataResultService } from 'src/app/shared/services/share-data-result.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,8 @@ export class TagConverterService {
   //   "loading": false,
   //   "networkStatus": 7
   // }
+
+  constructor(private sharedData: ShareDataResultService){}
 
   //Queries only return one data type, at version one, not nested types are supported
   fromResponseToTag(res: ApolloQueryResult<any>, algorithm: string, introspectionReturn: IntrospectionReturnType): BaseTag<any>[]{
@@ -50,8 +54,13 @@ export class TagConverterService {
     const tagData = {value: data[name], __typename: data.__typename, key: name}
     //Special cases
     switch(data.__typename){
-      case "URL" || "PolyData":{
+      case "URL":{
         return new ImageTag(tagData)
+      }
+      case "PolyData":{
+        //Here value is retreived from the sharedData Service because the file
+        //is not downloaded or anything, it is from the previous screen
+        return new ImagePolyData({value: this.sharedData.getData("file") as File, __typename: data.__typename, key: name, applyTo: data[name]})
       }
       case "JSON":{
         const json = JSON.parse(data[name])

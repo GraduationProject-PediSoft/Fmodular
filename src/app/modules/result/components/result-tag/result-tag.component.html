@@ -12,6 +12,10 @@
             <app-vtk-visualizer [file]="tag.value"></app-vtk-visualizer>
         </ng-container>
 
+        <ng-container *ngSwitchCase="'visualizer-polydata'">
+            <app-vtk-visualizer [file]="tag.value" [applierData]="this.tag.applyTo"></app-vtk-visualizer>
+        </ng-container>
+
         <p-table *ngSwitchCase="'json'" [value]="tag.value" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
