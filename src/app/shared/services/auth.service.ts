@@ -63,6 +63,7 @@ export class AuthService {
 
   loginError(){
     this.authenticationResponseSubject.next(new OIDCEntity)
+    this.isLoggedIn = false
     this.removeToken()
   }
 
