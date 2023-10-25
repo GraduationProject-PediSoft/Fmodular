@@ -25,6 +25,7 @@ export class AuthService {
     if (oidc === null) {
       this.authenticationResponseSubject = new BehaviorSubject<OIDCEntity>(new OIDCEntity);
     } else {
+      this.isLoggedIn = true
       this.authenticationResponseSubject = new BehaviorSubject<OIDCEntity>(JSON.parse(oidc));
     }
   }
