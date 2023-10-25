@@ -1,27 +1,28 @@
+<p-toast></p-toast>
 <div class="container">
-    
+
     <div class="login-card">
         <div class="left-side">
-            
-            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1430&q=80" alt="">
+
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1430&q=80"
+                alt="">
 
         </div>
         <div class="right-side">
             <img src="assets/logo-pedisoft-circle.png" alt="dsfsdfdsf">
             <h2>Pedisoft Login</h2>
 
-            <div class="form-item">
-                <label htmlFor="username">Username</label>
-                <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
-            </div>
-
-            <div class="form-item">
-                <label htmlFor="password">Password</label>
-                <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
-            </div>
-
-            <p-button label="Ingresar" (onClick)="login()"></p-button>
-            
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="form-item">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" pInputText formControlName="username"/>
+                </div>
+                <div class="form-item">
+                    <label for="password">Contraseña:</label>
+                    <p-password id="password" formControlName="password" [feedback]="false"></p-password>
+                </div>
+                <p-button [loading]="loading" label="Iniciar" type="submit" [disabled]="loginForm.invalid"></p-button>
+            </form>
 
         </div>
     </div>

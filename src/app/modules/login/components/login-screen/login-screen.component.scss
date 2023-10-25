@@ -27,6 +27,14 @@
     }
 }
 
+form{
+    @apply flex flex-col;
+
+    p-button{
+        @apply self-center
+    }
+}
+
 .form-item{
     @apply flex flex-col gap-2  mb-8 
 }
