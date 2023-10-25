@@ -2,7 +2,7 @@ footer{
     @apply bg-blue-600 rounded-sm shadow ;
 }
 .nav-item{
-    @apply mr-4 hover:underline md:mr-6;
+    @apply text-base mr-4 hover:underline md:mr-6 font-semibold;
 }
 
 .nav-list{
@@ -10,7 +10,7 @@ footer{
 }
 
 .copyright{
-    @apply text-sm text-white sm:text-center;
+    @apply text-base text-white sm:text-center font-semibold;
 }
 
 .c-wrapper{

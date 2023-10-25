@@ -3,12 +3,12 @@
 }
 
 form{
-    @apply flex flex-col gap-4 items-center w-full md:w-[65%] ;
+    @apply flex flex-col gap-4 items-center;
     label{
         @apply text-center
     }
     p-dropdown{
-        @apply w-full;
+        @apply w-96;
     }     
 }
 
@@ -17,5 +17,16 @@ form{
 }
 
 .panel-container{
-    @apply flex flex-col gap-1
+    @apply flex flex-col;
 }
+
+:host ::ng-deep .p-tabview{
+    @apply md:flex flex-col items-center;
+    .p-tabview-nav{
+        @apply gap-12;
+    }
+}
+
+
+
+

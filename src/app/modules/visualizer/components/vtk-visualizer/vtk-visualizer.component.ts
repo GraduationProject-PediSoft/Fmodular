@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 import '@kitware/vtk.js/Rendering';
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow';
@@ -39,7 +39,7 @@ import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
   templateUrl: './vtk-visualizer.component.html',
   styleUrls: ['./vtk-visualizer.component.scss']
 })
-export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
+export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   //Visualizer container
   @ViewChild("visualizer", { static: true })
   visualizer!: ElementRef
@@ -118,6 +118,7 @@ export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
     private cdRef: ChangeDetectorRef, private tagsService: TagsService) { }
 
   apply(data: any): void {
+
     const contours = JSON.parse(data);
     const points = vtkPoints.newInstance();
     const lines = vtkCellArray.newInstance();
@@ -144,7 +145,7 @@ export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
 
     const actorProperty = actor.getProperty();
     actorProperty.setColor(1, 0, 0);
-
+    
     this.renderer.addActor(actor)
     this.renderWindow.render()
   }
@@ -177,11 +178,12 @@ export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
   private ref: DynamicDialogRef | undefined;
 
 
-  ngOnInit(): void {
+  renderPolydata(): void {
     if(typeof this.applierData !== 'undefined'){
       this.apply(this.applierData)
     }
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['file']) {
       this.itemsMenu = this.items
@@ -210,6 +212,7 @@ export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
       const image = vtkITKHelper.convertItkToVtkImage(itkImage);
 
       this.imageRendering(image)
+      this.renderPolydata()
     };
 
     reader.readAsArrayBuffer(this.file);
@@ -351,8 +354,10 @@ export class VtkVisualizerComponent implements OnChanges, OnInit, Applier<any> {
 
   imageRendering(image: vtkImageData): void {
 
+  
     image.setDirection([1, 0, 0, 0, 1, 0, 0, 0, 1]); // Establecer la dirección correcta de la imagen
     image.setOrigin([0, 0, 0]); // Establecer el origen correcto para la visualización
+    image.setSpacing([1, 1, 1])
 
     this.renderWindow.addRenderer(this.renderer)
 
