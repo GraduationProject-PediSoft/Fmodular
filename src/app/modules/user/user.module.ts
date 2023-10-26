@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ManageUserService } from './services/manage-user.service';
 
 
 @NgModule({
@@ -26,6 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   exports:[
     GeneralUserComponent
+  ],
+  providers:[
+    ManageUserService
   ]
 })
 export class UserModule { }

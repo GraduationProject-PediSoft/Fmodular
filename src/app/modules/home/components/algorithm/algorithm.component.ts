@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { TabIndex } from './internal/menucontroller.enum';
 import { IntrospectionArgsType, IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-algorithm',
@@ -67,12 +68,20 @@ export class AlgorithmComponent implements OnInit{
           this.showServiceError = true
         }
       },
-      error: () =>{
-        this.messS.add({
-          severity: "error",
-          summary: "Error al obtener algoritmos, consulta tu conexión",
-          sticky: true
-        })
+      error: (e: HttpErrorResponse) =>{
+        if(e.status === 401){
+          this.messS.add({
+            severity: "error",
+            summary: "Logueate otra vez",
+            sticky: true
+          })
+        }else{
+          this.messS.add({
+            severity: "error",
+            summary: "Error al obtener algoritmos, consulta tu conexión",
+          })
+        }
+        
       }
     })
   }

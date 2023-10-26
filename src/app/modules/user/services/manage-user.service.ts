@@ -16,7 +16,10 @@ export class ManageUserService {
     return this.http.post<any>(`${environment.backendApi}/user/`, signUp)
   }
 
-  deleteUser(user: DeleteUserRequest) {
+  deleteUser(user: DeleteUserRequest): Observable<any> {
     return this.http.delete<any>(`${environment.backendApi}/user/`, {body: user})
+  }
+  test():Observable<any>{
+    return this.http.get<any>("https://dummyjson.com/products/1")
   }
 }

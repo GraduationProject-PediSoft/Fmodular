@@ -25,6 +25,7 @@ export class CreateUserComponent {
   }
 
   signUp(){
+    console.log("SIGNUP COMPONENT")
     this.loading = true
     this.signUpForm.disable()
     this.manage.signUp(this.signUpForm.value as SignUpRequest)
