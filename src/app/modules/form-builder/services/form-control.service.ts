@@ -4,17 +4,21 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
 import { ApolloQueryResult, InMemoryCache } from '@apollo/client/core';
 import { environment } from 'src/environments/environment';
-import { createUploadLink } from 'apollo-upload-client';
 import { Observable } from 'rxjs';
 import { IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 import { ShareDataResultService } from 'src/app/shared/services/share-data-result.service';
+import { HttpLink } from 'apollo-angular/http';
+
+import extractFiles from 'extract-files/extractFiles.mjs';
+import isExtractableFile from 'extract-files/isExtractableFile.mjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormControlService {
 
-  constructor(private apollo: Apollo, private shareData: ShareDataResultService) { }
+  constructor(private apollo: Apollo, private shareData: ShareDataResultService, private httpLink:HttpLink) { 
+  }
 
   toFormGroup(tags: BaseTag<any>[]) {
     const group: any = {};
@@ -31,8 +35,10 @@ export class FormControlService {
     this.apollo.removeClient()
     this.apollo.create(({
       cache: new InMemoryCache(),
-      //link: this.httpLink.create({ uri: `${environment.backendApi}/${uri}/graphql` }),
-      link: createUploadLink({ uri: `${environment.backendApi}/${uri}/graphql` })
+      link: this.httpLink.create({ uri: `${environment.backendApi}/${uri}/graphql`, 
+        extractFiles: (body) => extractFiles(body, isExtractableFile)
+      }),
+      //link: createUploadLink({ uri: `${environment.backendApi}/${uri}/graphql`,  })
     }))
   }
 
