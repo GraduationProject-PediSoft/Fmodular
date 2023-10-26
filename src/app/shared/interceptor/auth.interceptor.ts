@@ -14,7 +14,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) { }
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("Interceptor")
     const token = this.auth.token
     if (token == "") {
       //Return inmedialy to avoid 401 errors with oauth2 resource servers

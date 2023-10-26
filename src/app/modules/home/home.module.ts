@@ -22,6 +22,7 @@ import { FormBuilderModule } from "../form-builder/form-builder.module";
 import { TabViewModule,  } from 'primeng/tabview';
 import { MessageModule } from 'primeng/message';
 import { ResultModule } from '../result/result.module';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import { ResultModule } from '../result/result.module';
         FormBuilderModule,
         TabViewModule,
         MessageModule,
-        ResultModule
+        ResultModule,
+        UserModule
     ]
 })
 export class HomeModule { }
