@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ManageUserService } from '../../services/manage-user.service';
 import { SignUpRequest } from '../../entity/signup-request';
-import { finalize } from 'rxjs';
+import { finalize, map } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -25,7 +25,6 @@ export class CreateUserComponent {
   }
 
   signUp(){
-    console.log("SIGNUP COMPONENT")
     this.loading = true
     this.signUpForm.disable()
     this.manage.signUp(this.signUpForm.value as SignUpRequest)

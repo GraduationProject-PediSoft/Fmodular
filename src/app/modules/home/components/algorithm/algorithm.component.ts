@@ -57,7 +57,8 @@ export class AlgorithmComponent implements OnInit{
 
   getServices(){
     this.loadingS = true
-    this.algorithmS.getServices().pipe(
+    this.algorithmS.getServices()
+    .pipe(
       finalize(() =>{
         this.loadingS = false
       })

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SignUpRequest } from '../entity/signup-request';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DeleteUserRequest } from '../entity/delete-user-request';
 
 @Injectable({
@@ -18,8 +18,5 @@ export class ManageUserService {
 
   deleteUser(user: DeleteUserRequest): Observable<any> {
     return this.http.delete<any>(`${environment.backendApi}/user/`, {body: user})
-  }
-  test():Observable<any>{
-    return this.http.get<any>("https://dummyjson.com/products/1")
   }
 }
