@@ -24,7 +24,8 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
     MessageModule,
     CheckboxModule,
     FileUploadModule,
-    VisualizerModule
+    VisualizerModule,
+    InputTextModule
   ],
   exports:[
     AlgorithmFormComponent

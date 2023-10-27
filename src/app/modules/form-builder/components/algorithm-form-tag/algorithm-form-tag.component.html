@@ -4,11 +4,10 @@
     <ng-container [ngSwitch]="tag.controlType">
 
         <input *ngSwitchCase="'stringbox'" [id]="tag.key" type="text" pInputText [formControlName]="tag.key" />
-        <p-inputNumber *ngSwitchCase="'intbox'" [inputId]="tag.key" [formControlName]="tag.key"></p-inputNumber>
+        <input type="number" *ngSwitchCase="'intbox'" [id]="tag.key" [formControlName]="tag.key" pInputText pKeyFilter="int" />
         <p-checkbox *ngSwitchCase="'boolbox'" [formControlName]="tag.key" [value]="tag.label"
             [inputId]="tag.key"></p-checkbox>
-        <p-inputNumber *ngSwitchCase="'floatbox'" mode="decimal" [inputId]="tag.key"
-            [formControlName]="tag.key"></p-inputNumber>
+        <input type="number" *ngSwitchCase="'floatbox'" [id]="tag.key" [formControlName]="tag.key" pInputText pKeyFilter="number" />
 
         <ng-container *ngSwitchCase="'visualizer'">
             <p-fileUpload [disabled]="this.form.disabled" #fileUpload mode="basic" [chooseLabel]="'Selecciona'"
