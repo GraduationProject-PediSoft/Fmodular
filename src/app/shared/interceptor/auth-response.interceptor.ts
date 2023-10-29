@@ -20,21 +20,20 @@ export class AuthResponseInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
           return this.auth.refreshToken().pipe(
-            catchError((refreshError: any) => {
-              console.log("BKJCKJBCKJBSJKBKJDS")
-              if (refreshError.status === 401) {
-                this.loginError()
-              }
-              return throwError(()=>refreshError);
-            }),
             switchMap(() => {
-              // Token refreshed, retry the original request with the new token
+              console.log("bnjfsdjkbsdfbjkfsd")
               const newRequest = req.clone({
                 setHeaders: {
                   Authorization: `Bearer ${this.auth.token}`,
                 },
               });
               return next.handle(newRequest);
+            }),
+            catchError((refreshError: any) => {
+              if (refreshError.status === 401) {
+                this.loginError()
+              }
+              return throwError(()=>refreshError);
             })
           );
         }

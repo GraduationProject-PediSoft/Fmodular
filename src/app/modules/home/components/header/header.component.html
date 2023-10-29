@@ -16,7 +16,7 @@
       </button>
     </div>
     <div #navbar_sticky class="items-center mr-20 justify-between hidden w-full md:flex md:w-auto md:order-1 ml-auto">
-      <ul class="nav-list">
+      <ul class="nav-list md:items-center">
         <li>
           <a [routerLink]="'/home'" routerLinkActive="nav-item-selected" class="nav-item"
             [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">Inicio </a>
@@ -32,6 +32,9 @@
         <li>
           <a [routerLink]="'/home/help'" routerLinkActive="nav-item-selected" class="nav-item"
             ariaCurrentWhenActive="page">Ayuda</a>
+        </li>
+        <li>
+          <p-button  (onClick)="this.logout()" label="Danger" severity="danger" [outlined]="true" [size]="small"></p-button>
         </li>
       </ul>
     </div>

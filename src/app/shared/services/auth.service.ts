@@ -47,7 +47,7 @@ export class AuthService {
     );
   }
 
-  logout() {
+  logout(): Observable<any> {
     const refreshToken = this.authenticationResponseSubject.value.refresh_token;
 
     return this.http.post(`${environment.backendApi}/user/auth/logout`, { refreshToken: refreshToken }).pipe(
