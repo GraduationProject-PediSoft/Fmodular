@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, map } from 'rxjs';
 import { OIDCEntity } from '../entity/oidc';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -51,7 +51,7 @@ export class AuthService {
     const refreshToken = this.authenticationResponseSubject.value.refresh_token;
 
     return this.http.post(`${environment.backendApi}/user/auth/logout`, { refreshToken: refreshToken }).pipe(
-      map(v => {
+      finalize(() => {
         this.removeToken();
         this.authenticationResponseSubject.next(new OIDCEntity);
         this.isLoggedIn = false;
@@ -87,6 +87,13 @@ export class AuthService {
     this.authenticationResponseSubject.next(new OIDCEntity)
     this.isLoggedIn = false
     this.removeToken()
+  }
+
+  removeAccessToken(){
+    const currentData = this.authenticationResponseSubject.value;
+    const updatedData = { ...currentData };
+    updatedData.access_token = "";
+    this.authenticationResponseSubject.next(updatedData);
   }
 
 }
