@@ -22,6 +22,10 @@ export class AuthService {
     return this.authenticationResponseSubject.value.access_token;
   }
 
+  public get rToken(): string{
+    return this.authenticationResponseSubject.value.refresh_token;
+  } 
+
   constructor(private http: HttpClient) {
     let oidc = localStorage.getItem('currentOIDC');
     if (oidc === null) {

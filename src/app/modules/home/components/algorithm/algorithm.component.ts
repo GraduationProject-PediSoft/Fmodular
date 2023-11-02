@@ -3,8 +3,9 @@ import { AlgorithmService } from '../../services/algorithm.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { TabIndex } from './internal/menucontroller.enum';
-import { IntrospectionArgsType, IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
+import { IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-algorithm',
@@ -39,6 +40,8 @@ export class AlgorithmComponent implements OnInit{
       .subscribe({
         next: (v:IntrospectionQueryResponse) => { 
           this.algorithms = v.__schema.queryType.fields as IntrospectionFieldsType[];
+          this.buildFormBool = false
+          this.result = undefined
           if(this.algorithms.length > 0){
             this.activeIndex = TabIndex.ALGORITHM
           }else{

@@ -43,5 +43,9 @@ export class ResultTagComponent implements OnInit{
       }
     }
   }
+
+  get displayLabel(): boolean{
+    return !["visualizer", "visualizer-polydata", "json"].includes(this.tag.type) 
+  }
   
 }

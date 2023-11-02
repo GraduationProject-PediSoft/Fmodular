@@ -19,6 +19,9 @@ export class AuthResponseInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 || error.status === 403) {
+          if(this.auth.rToken === ""){
+            return next.handle(req)
+          }
           this.auth.removeAccessToken()
           return this.auth.refreshToken().pipe(
             switchMap(() => {
