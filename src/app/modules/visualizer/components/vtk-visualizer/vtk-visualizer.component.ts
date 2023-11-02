@@ -108,10 +108,19 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
         label: 'Mostrar Tags',
         icon: 'pi pi-fw pi-tags',
         command: () => this.showTags(),
-        disabled: this.file?.type !== "application/dicom"
+        disabled: this.allowedTags
 
       }
     ]
+  }
+
+  get allowedTags(): boolean{
+    if (this.file?.type === ""){
+      const fileExt = "." + this.file?.name.split(".").pop()
+      const accepted = fileExt === '.dcm'
+      return !accepted
+    }
+    return this.file?.type !== "application/dicom"
   }
 
   constructor(private dialogService: DialogService,
