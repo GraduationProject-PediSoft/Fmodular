@@ -17,7 +17,8 @@ export class AlgorithmFormTagComponent {
   get isPristine() { return this.form.controls[this.tag.key].pristine }
   get value() { return this.form.controls[this.tag.key].value }
 
-  protected readonly ACCEPTED_TYPES = ["image/jpg", "image/png","image/jpeg","application/dicom"]
+  protected readonly ACCEPTED_TYPES = ["image/jpg", "image/png","image/jpeg"
+    ,"application/dicom", ".dcm", ".jpeg", ".jpg", ".png"]
 
   protected selectFile($event: FileUploadHandlerEvent, id: any) {
     const file: File = $event.files[0]
