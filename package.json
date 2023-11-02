@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^16.2.11",
     "@angular/platform-browser-dynamic": "^16.2.11",
     "@angular/router": "^16.2.11",
+    "@angular/youtube-player": "^16.2.11",
     "@apollo/client": "^3.0.0",
     "@iwharris/dicom-data-dictionary": "^1.26.0",
     "@kitware/vtk.js": "^28.12.0",

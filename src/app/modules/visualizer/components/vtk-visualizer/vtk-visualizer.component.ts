@@ -230,7 +230,8 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
 
   showTags(): DynamicDialogRef {
     this.ref = this.dialogService.open(TagsComponent, {
-      header: 'DICOM Tags'
+      header: 'DICOM Tags',
+      styleClass: ' md:w-[50%] md:h-[70%] w-full h-full'
     });
     const dialogRef = this.dialogService.dialogComponentRefMap.get(this.ref);
     const dynamicComponent = dialogRef?.instance as DynamicDialogComponent;
