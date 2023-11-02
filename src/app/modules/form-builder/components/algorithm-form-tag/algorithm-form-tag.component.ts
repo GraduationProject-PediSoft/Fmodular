@@ -17,12 +17,17 @@ export class AlgorithmFormTagComponent {
   get isPristine() { return this.form.controls[this.tag.key].pristine }
   get value() { return this.form.controls[this.tag.key].value }
 
-  protected readonly ACCEPTED_TYPES = ["image/jpg", "image/png","image/jpeg"
-    ,"application/dicom", ".dcm", ".jpeg", ".jpg", ".png"]
+  protected readonly ACCEPTED_TYPES_MIME = ["image/jpg", "image/png","image/jpeg"
+    ,"application/dicom"]
+
+  protected readonly ACCEPTED_TYPES_EXT = [".dcm", ".jpeg", ".jpg", ".png"]
+
+
 
   protected selectFile($event: FileUploadHandlerEvent, id: any) {
     const file: File = $event.files[0]
-    if(this.ACCEPTED_TYPES.includes(file.type)){
+    const fileExt: string = "." + file.name.split(".").pop() as string
+    if(this.ACCEPTED_TYPES_MIME.includes(file.type) || this.ACCEPTED_TYPES_EXT.includes(fileExt)){
       this.tag.value = file
       this.form.controls[this.tag.key].setValue(file);
     }
