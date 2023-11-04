@@ -6,17 +6,23 @@ import { MenubarModule } from 'primeng/menubar';
 import { TagsComponent } from './components/tags/tags.component'
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { InfoComponent } from './components/info/info.component';
 
 
 @NgModule({
   declarations: [
     VtkVisualizerComponent,
-    TagsComponent
+    TagsComponent,
+    InfoComponent
   ],
   imports: [
     CommonModule,
     MenubarModule,
-    TableModule
+    TableModule,
+    ButtonModule,
+    DialogModule
   ],
   exports:[
     VtkVisualizerComponent
