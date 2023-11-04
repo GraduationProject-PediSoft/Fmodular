@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
 import '@kitware/vtk.js/Rendering';
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow';
@@ -34,7 +34,11 @@ import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
 import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
 import { InfoComponent } from '../info/info.component';
 
-
+/**
+ * Main Visualizer service for vtk integration
+ * @implements OnChanges for hot rerender
+ * @implements Applier to use with PolyData
+ */
 @Component({
   selector: 'app-vtk-visualizer',
   templateUrl: './vtk-visualizer.component.html',

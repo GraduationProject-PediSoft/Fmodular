@@ -5,7 +5,9 @@ import { ErrorRoutingModule } from './error-routing.module';
 import { ButtonModule } from 'primeng/button';
 
 
-
+/**
+ * This module defines all error components for its use in the project
+ */
 @NgModule({
   declarations: [
     NotFoundComponent

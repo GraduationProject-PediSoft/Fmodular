@@ -9,7 +9,10 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
 import { TableModule } from 'primeng/table';
 import { MessageModule } from 'primeng/message';
 
-
+/**
+ * Module that defines the result view
+ * @exports ResultViewComponent
+ */
 @NgModule({
   declarations: [
     ResultViewComponent,

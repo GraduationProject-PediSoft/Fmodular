@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RefreshTokenResponse } from '../entity/refresh-token-response';
 
+/**
+ * Authentication service for the app
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,14 +17,23 @@ export class AuthService {
   private authenticationResponseSubject: BehaviorSubject<OIDCEntity>
   public isLoggedIn: boolean = false;
 
+  /**
+   * @get Return rxjs subject with the oidc en entity
+   */
   public get isLogged() {
     return this.authenticationResponseSubject;
   }
 
+  /**
+   * @get Get access token
+   */
   public get token(): string {
     return this.authenticationResponseSubject.value.access_token;
   }
 
+  /**
+   * @get Get refresh token
+   */
   public get rToken(): string{
     return this.authenticationResponseSubject.value.refresh_token;
   } 
@@ -36,6 +48,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Login with the diven credentials
+   * @param credentials credentials for the user
+   * @returns Observable with the Request result
+   */
   login(credentials:{username: string, password: string}): Observable<OIDCEntity> {
     return this.http.post<OIDCEntity>(`${environment.backendApi}/user/auth/login`, {
       "username": credentials.username,
@@ -51,6 +68,12 @@ export class AuthService {
     );
   }
 
+  /**
+   * Logouts from the system and deletes internal token
+   * @returns Observable with the Request result
+   * @remarks
+   * The JWT token by design will be valid still after the logout, it is by design of the JWT
+   */
   logout(): Observable<any> {
     const refreshToken = this.authenticationResponseSubject.value.refresh_token;
 
@@ -63,10 +86,17 @@ export class AuthService {
     );
   }
 
+  /**
+   * Remove internal entity
+   */
   private removeToken(){
     localStorage.removeItem(AuthService.INTERNAL_STORAGE_NAME)
   }
 
+  /**
+   * Refresh the access_token fiven the internal refresh_token
+   * @returns Observable with the Request result
+   */
   refreshToken(): Observable<any> {
     const refresh = {refreshToken: this.isLogged.value.refresh_token}
     return this.http.post<any>(`${environment.backendApi}/user/auth/refresh`, refresh)
@@ -87,12 +117,19 @@ export class AuthService {
       )
   }
 
+  /**
+   * Login error flow
+   * deletes internal storage
+   */
   loginError(){
     this.authenticationResponseSubject.next(new OIDCEntity)
     this.isLoggedIn = false
     this.removeToken()
   }
 
+  /**
+   * Resets access_token when it is expired so a new one can be requested with the refresh_token
+   */
   removeAccessToken(){
     const currentData = this.authenticationResponseSubject.value;
     const updatedData = { ...currentData };

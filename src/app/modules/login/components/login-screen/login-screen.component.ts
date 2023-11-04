@@ -7,6 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 
+/**
+ * Main Login component
+ */
 @Component({
   selector: 'app-login-screen',
   templateUrl: './login-screen.component.html',

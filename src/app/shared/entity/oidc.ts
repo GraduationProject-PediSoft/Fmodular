@@ -1,3 +1,7 @@
+/**
+ * OIDC (Open ID Connect) entity
+ * the system is designed to use with the outh2 protocol
+ */
 export class OIDCEntity {
     access_token: string = ""
     expires_in: string = ""

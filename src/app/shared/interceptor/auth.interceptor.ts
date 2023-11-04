@@ -8,6 +8,10 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
+/**
+ * Main interceptor for the app, it adds the token to the http request if it is present in the
+ * auth service
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

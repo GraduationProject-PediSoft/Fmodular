@@ -10,6 +10,9 @@ import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
+/**
+ * Interceptor to refresh the oauth2 access_token if a 401 error occurs
+ */
 @Injectable()
 export class AuthResponseInterceptor implements HttpInterceptor {
 
@@ -45,6 +48,10 @@ export class AuthResponseInterceptor implements HttpInterceptor {
     );
   }
 
+  /**
+   * On login error (bas credentials, bad token, etc)
+   * returns to the login
+   */
   private loginError() {
     this.auth.loginError()
     setTimeout(() => this.router.navigate(["/login"]), 1500)

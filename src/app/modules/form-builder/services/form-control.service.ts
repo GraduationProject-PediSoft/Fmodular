@@ -12,6 +12,12 @@ import { HttpLink } from 'apollo-angular/http';
 import extractFiles from 'extract-files/extractFiles.mjs';
 import isExtractableFile from 'extract-files/isExtractableFile.mjs';
 
+/**
+ * This service controls the creation of the angular form for each IA service
+ * @remarks
+ * If the result component needs info from the form view, this service should save it
+ * in the shared service ShareDataResultService
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +26,12 @@ export class FormControlService {
   constructor(private apollo: Apollo, private shareData: ShareDataResultService, private httpLink:HttpLink) { 
   }
 
-  toFormGroup(tags: BaseTag<any>[]) {
+  /**
+   * 
+   * @param tags Tags that represent the IA model params
+   * @returns FormGroup: the reactiveforms class that has the tags and controls for the form
+   */
+  toFormGroup(tags: BaseTag<any>[]): FormGroup {
     const group: any = {};
 
     tags.forEach(tag => {
@@ -31,6 +42,10 @@ export class FormControlService {
   }
 
 
+  /**
+   * Generates new apollo client with multipart capabilities
+   * @param uri Url for the graphql IA Service
+   */
   private genNewClient(uri: string) {
     this.apollo.removeClient()
     this.apollo.create(({
@@ -42,6 +57,16 @@ export class FormControlService {
     }))
   }
 
+  /**
+   * Builds the graphql query based on the graphql introspection return type
+   * @param algorithm the name of the algorithm selected
+   * @param param an instance of IntrospectionReturnType
+   * @param fields the fields the Graphql query wants
+   * @returns the graphql query ready to be sended to the backend
+   * @remarks
+   * Graphql does not accept empty '{}' so if the query doesnt have subtypes
+   * the '{}' have to be removed from the query 
+   */
   private buildQuery(algorithm: string, param: IntrospectionReturnType, fields: any) {
     if (param.ofType?.fields === null || param.ofType?.fields.length === 0) {
       return gql`
@@ -58,10 +83,18 @@ export class FormControlService {
         }
       `
     }
-   
-      
-
   }
+
+  /**
+   * Sends the query to the backend 
+   * @param form FormGroup with the info the user filled in the fields section
+   * @param service The name of the service
+   * @param algorithm the name of the graphql query that represents the algorithm
+   * @param param IntrospectionReturnType that contains the return fields of the model
+   * @param fields the fields the query awaits
+   * @returns Observable: an rxjs observable with the result of the Graphql query. It also has the __typename
+   * to build the response
+   */
   sendQuery(form: FormGroup, service: string
       , algorithm: string, param: IntrospectionReturnType, fields: any): Observable<ApolloQueryResult<unknown>> {
     this.genNewClient(service)
@@ -78,9 +111,12 @@ export class FormControlService {
       }
     })
   }
-
-  //This method shared data with a common service with ResultComponent
-  //In this prototype is only for Polydata but could be for anything
+  
+  /**
+   * This method shared data with a common service with ResultComponent
+   * In this prototype is only for Polydata but could be for anything
+   * @param data Data that want to be shared with the result tab
+   */
   private setData(data: any){
     this.shareData.addData("file", data)
   }

@@ -10,7 +10,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InfoComponent } from './components/info/info.component';
 
-
+/**
+ * Module for the integration of vtk with angular
+ * @exports VtkVisualizerComponent
+ */
 @NgModule({
   declarations: [
     VtkVisualizerComponent,

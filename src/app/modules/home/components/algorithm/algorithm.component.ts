@@ -5,8 +5,10 @@ import { finalize } from 'rxjs';
 import { TabIndex } from './internal/menucontroller.enum';
 import { IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UpperCasePipe } from '@angular/common';
 
+/**
+ * The view that represents the process of selecting the algorithm, the service, the form, the results, etc
+ */
 @Component({
   selector: 'app-algorithm',
   templateUrl: './algorithm.component.html',

@@ -1,9 +1,11 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BaseTag } from '../../reactive-tags/base-tag';
 import { FormGroup } from '@angular/forms';
-import { FileSelectEvent, FileUploadEvent, FileUploadHandlerEvent } from 'primeng/fileupload';
-import { event } from '@kitware/vtk.js/macros';
+import { FileUploadHandlerEvent } from 'primeng/fileupload';
 
+/**
+ * This component defines each html tag representing a graphql type, scalar, custom type etc
+ */
 @Component({
   selector: 'app-algorithm-form-tag',
   templateUrl: './algorithm-form-tag.component.html',
@@ -22,8 +24,11 @@ export class AlgorithmFormTagComponent {
 
   protected readonly ACCEPTED_TYPES_EXT = [".dcm", ".jpeg", ".jpg", ".png"]
 
-
-
+  /**
+   * If the tag is an image, checks if it is supported in the visualizer component 
+   * @param $event Primeng FileUploadHandlerEvent that contains the file
+   * @param id id representing the p-fileUpload for clearing it when the file uploads
+   */
   protected selectFile($event: FileUploadHandlerEvent, id: any) {
     const file: File = $event.files[0]
     const fileExt: string = "." + file.name.split(".").pop() as string

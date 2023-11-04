@@ -3,6 +3,9 @@ import { PrimeNGConfig } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { TagsService } from '../../services/tags.service';
 
+/**
+ * HTML component for dicom tags, displayed as a popup
+ */
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',

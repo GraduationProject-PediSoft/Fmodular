@@ -1,27 +1,23 @@
-# Ftesis
+# Frontend Pedisoft
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
+This repository contains the frontend project for pedisoft services written in angular 16.2.8. The project has a few important dependencies:
 
-## Development server
+ - [Primeng](https://primeng.org/): Graphic components (buttons, tables, lists, etc)
+ - [Vtkjs](https://kitware.github.io/vtk-js/index.html): Javascript components for interaction with the vtk library
+ - [Itk-wasm](https://wasm.itk.org/en/latest/index.html): File adapters for many image formats (dicom, jpeg, png, etc)
+ - [Tailwind](https://tailwindcss.com/): A utility-first CSS framework for better styles writting
+ - [Apollo](https://www.apollographql.com/docs/): Graphql client for the angular framework
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+And other ones, but these are the most important ones that a developer should have in mind if he wants to continue the project.
+ 
+# Environment
+The files inside the [environment](https://github.com/GraduationProject-PediSoft/Fmodular/tree/master/src/environments) folder contains the **urls** for the backend services. Should edit them according to the needs
 
-## Code scaffolding
+# Running
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The project was designed to be executed in a containerized environment. In this repo [Docker](https://www.docker.com/) was used for it, but podman or kubernetes could be used with little configuration. The compose file builds and executes the nginx web server without any additional configuration, simply run:
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```sh
+docker compose up -d
+```
+The project will run on [http://localhost:12122](http://localhost:12122), the compose file defines the port and can be changed if needed

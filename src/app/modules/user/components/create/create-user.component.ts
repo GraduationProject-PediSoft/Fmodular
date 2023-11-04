@@ -6,6 +6,9 @@ import { finalize, map } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 
+/**
+ * Create user component
+ */
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',

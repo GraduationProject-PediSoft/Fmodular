@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
+/**
+ * The main header of the web page, it also defines the components to view in a responsive way (cellphone)
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

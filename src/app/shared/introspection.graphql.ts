@@ -1,5 +1,8 @@
 import { gql } from "apollo-angular";
-
+/**
+ * This file defines the introspection query the system uses to obtain info from the 
+ * graphql server 
+ */
 export const introspectionQuery = gql`
 query IntrospectionQuery {
     __schema {

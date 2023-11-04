@@ -6,6 +6,9 @@ import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 
+/**
+ * Delete user componenet
+ */
 @Component({
   selector: 'app-delete-user',
   templateUrl: './delete-user.component.html',

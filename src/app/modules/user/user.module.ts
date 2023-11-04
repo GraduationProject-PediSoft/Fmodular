@@ -10,7 +10,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ManageUserService } from './services/manage-user.service';
 
-
+/**
+ * Module for user administration
+ * @exports GeneralUserComponent
+ */
 @NgModule({
   declarations: [
     GeneralUserComponent,

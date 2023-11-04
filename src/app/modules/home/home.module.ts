@@ -24,6 +24,10 @@ import { ResultModule } from '../result/result.module';
 import { UserModule } from '../user/user.module';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 
+/**
+ * This is the main module of the project, containes the basic view for selecting a service,
+ * an algorithm, filling the form and viewing the results
+ */
 @NgModule({
     declarations: [
         HeaderComponent,

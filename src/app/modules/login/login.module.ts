@@ -9,8 +9,9 @@ import { PasswordModule } from 'primeng/password'
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
-
-
+/**
+ * A module that defines the Login process of Pedisoft
+ */
 @NgModule({
   declarations: [
     LoginScreenComponent
