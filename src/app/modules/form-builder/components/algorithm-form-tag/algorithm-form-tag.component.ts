@@ -41,10 +41,11 @@ export class AlgorithmFormTagComponent {
       //mime type
       switch(fileExt){
         case '.dcm':{
-          this.tag.value = new File([file], file.name, {type: "application/dicom"});
+          const nFile = new File([file], file.name, {type: "application/dicom"}); 
+          this.tag.value = nFile
+          this.form.controls[this.tag.key].setValue(nFile);
         }
       }
-      this.form.controls[this.tag.key].setValue(file);
     }
     id.clear()
   }
