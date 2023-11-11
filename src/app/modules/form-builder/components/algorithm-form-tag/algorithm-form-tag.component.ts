@@ -22,7 +22,7 @@ export class AlgorithmFormTagComponent {
   protected readonly ACCEPTED_TYPES_MIME = ["image/jpg", "image/png","image/jpeg"
     ,"application/dicom"]
 
-  protected readonly ACCEPTED_TYPES_EXT = [".dcm", ".jpeg", ".jpg", ".png"]
+  protected readonly ACCEPTED_TYPES_EXT = [".dcm"]
 
   /**
    * If the tag is an image, checks if it is supported in the visualizer component 
@@ -32,8 +32,18 @@ export class AlgorithmFormTagComponent {
   protected selectFile($event: FileUploadHandlerEvent, id: any) {
     const file: File = $event.files[0]
     const fileExt: string = "." + file.name.split(".").pop() as string
-    if(this.ACCEPTED_TYPES_MIME.includes(file.type) || this.ACCEPTED_TYPES_EXT.includes(fileExt)){
+    if(this.ACCEPTED_TYPES_MIME.includes(file.type)){
       this.tag.value = file
+      this.form.controls[this.tag.key].setValue(file);
+    }
+    else if(this.ACCEPTED_TYPES_EXT.includes(fileExt)){
+      //On windows systems dicom MIME Type do not work, so based on the file extention reasign the
+      //mime type
+      switch(fileExt){
+        case '.dcm':{
+          this.tag.value = new File([file], file.name, {type: "application/dicom"});
+        }
+      }
       this.form.controls[this.tag.key].setValue(file);
     }
     id.clear()
