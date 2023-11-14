@@ -1,1 +1,86 @@
-<p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" ></p-steps>
+<div class="flex flex-col gap-8">
+    <p-fieldset [toggleable]="true" [collapsed]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center text-primary justify-center">
+                <span class="pi pi-server mr-2"></span>
+                <span class="font-bold text-lg">Escoger un servicio</span>
+            </div>
+        </ng-template>
+        <div class="mb-6">
+            <p class="text-xl font-semibold">Paso 1: Acceder a la Pestaña de Algoritmos y Mostrar Servicios Disponibles
+            </p>
+            <p class="text-gray-600 mb-4">Sigue estos pasos para acceder a la pestaña de Algoritmos y ver los servicios
+                disponibles:</p>
+
+            <!-- Subpasos -->
+            <ol class="list-decimal pl-6">
+                <li>Dirígete a la parte superior derecha de la pantalla y busca la pestaña de "Algoritmos" en el menú.
+                </li>
+                <li>Haz clic en la pestaña de "Algoritmos" y espera a que se muestre una sección que indica el flujo de
+                    operaciones.</li>
+                <li>En la sección, se desplegarán opciones disponibles de servicios relacionados con algoritmos.</li>
+            </ol>
+        </div>
+    </p-fieldset>
+
+    <p-fieldset [toggleable]="true" [collapsed]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center text-primary justify-center">
+                <span class="pi pi-box mr-2"></span>
+                <span class="font-bold text-lg">Escoger un algoritmo</span>
+            </div>
+        </ng-template>
+
+        <div class="mb-6">
+            <p class="text-xl font-semibold">Paso 2: Seleccionar un Algoritmo y Servicio</p>
+            <p class="text-gray-600 mb-4">Continúa con los siguientes pasos para seleccionar un algoritmo y un servicio:
+            </p>
+
+            <!-- Subpasos -->
+            <ol class="list-decimal pl-6">
+                <li>Una vez que se muestren los servicios disponibles en la sección del flujo, examina las opciones
+                    desplegables para los algoritmos.</li>
+                <li>Selecciona un algoritmo que se adapte a tu necesidad.</li>
+                <li>Al escoger un algoritmo, serás automáticamente dirigido al formulario.</li>
+            </ol>
+        </div>
+
+    </p-fieldset>
+
+    <p-fieldset [toggleable]="true" [collapsed]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center text-primary justify-center">
+                <span class="pi pi-sliders-h mr-2"></span>
+                <span class="font-bold text-lg">Llenar el formulario</span>
+            </div>
+        </ng-template>
+
+        <div class="mb-6">
+            <p class="text-xl font-semibold">Paso 3: Llenar el Formulario y Enviar la Información</p>
+            <p class="text-gray-600 mb-4">Encontrarás un formulario específico.</p>
+
+            <!-- Subpasos -->
+            <ol class="list-decimal pl-6">
+                <li>Completa el formulario proporcionando la información requerida, que puede variar según el algoritmo.
+                </li>
+                <li>Además, puedes subir la imagen o cualquier otro dato necesario para la ejecución del algoritmo.</li>
+                <li>Una vez que hayas llenado todos los campos del formulario, procede a enviar la información.</li>
+            </ol>
+        </div>
+
+        <p class="text-gray-600">¡Disfruta de la velocidad! Gracias a la tecnología de PediSoft.</p>
+    </p-fieldset>
+
+    <p-fieldset [toggleable]="true" [collapsed]="true">
+        <ng-template pTemplate="header">
+            <div class="flex items-center text-primary justify-center">
+                <span class="pi pi-youtube mr-2"></span>
+                <span class="font-bold text-lg">Video Tutorial</span>
+            </div>
+        </ng-template>
+        <a href="https://youtu.be/XeS2y3W2Dvg" target="_blank" rel="noopener noreferrer"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300 ease-in-out">
+            ¡Mira el video tutorial!
+        </a>
+    </p-fieldset>
+</div>

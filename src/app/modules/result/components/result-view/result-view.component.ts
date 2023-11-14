@@ -2,8 +2,12 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BaseTag } from '../../result-tags/base-tag';
 import { TagConverterService } from '../../services/tag-converter.service';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { IntrospectionQueryResponse, IntrospectionReturnType } from 'src/app/shared/introspection.interface';
+import { IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 
+/**
+ * Main component of the result view with each subtag
+ * @implements OnChanges for lifecycle hooks
+ */
 @Component({
   selector: 'app-result-view',
   templateUrl: './result-view.component.html',
@@ -28,13 +32,12 @@ export class ResultViewComponent implements OnChanges {
       this.buildResponse()
     }
   }
+  
   ngOnInit(): void {
     this.buildResponse()
   }
 
   private buildResponse(){
- 
     this.tags = this.tg.fromResponseToTag(this.res, this.algorithm, this.resIntrospection)
-  
   }
 }

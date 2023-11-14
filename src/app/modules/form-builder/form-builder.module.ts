@@ -10,6 +10,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FileUploadModule } from 'primeng/fileupload';
 import { VisualizerModule } from '../visualizer/visualizer.module';
 
+/**
+ * @module
+ * This module defines all the components for building the dynamic form based in the
+ * graphql introspection query
+ * @exports AlgorithmFormComponent
+ */
 @NgModule({
   declarations: [
     AlgorithmFormComponent,
@@ -24,7 +30,8 @@ import { VisualizerModule } from '../visualizer/visualizer.module';
     MessageModule,
     CheckboxModule,
     FileUploadModule,
-    VisualizerModule
+    VisualizerModule,
+    InputTextModule
   ],
   exports:[
     AlgorithmFormComponent

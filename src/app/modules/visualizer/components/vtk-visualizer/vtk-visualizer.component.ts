@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
 import '@kitware/vtk.js/Rendering';
 import vtkRenderWindow from '@kitware/vtk.js/Rendering/Core/RenderWindow';
@@ -32,8 +32,13 @@ import vtkCellArray from '@kitware/vtk.js/Common/Core/CellArray';
 import vtkPolyData from '@kitware/vtk.js/Common/DataModel/PolyData';
 import vtkMapper from '@kitware/vtk.js/Rendering/Core/Mapper';
 import vtkActor from '@kitware/vtk.js/Rendering/Core/Actor';
+import { InfoComponent } from '../info/info.component';
 
-
+/**
+ * Main Visualizer service for vtk integration
+ * @implements OnChanges for hot rerender
+ * @implements Applier to use with PolyData
+ */
 @Component({
   selector: 'app-vtk-visualizer',
   templateUrl: './vtk-visualizer.component.html',
@@ -108,10 +113,29 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
         label: 'Mostrar Tags',
         icon: 'pi pi-fw pi-tags',
         command: () => this.showTags(),
-        disabled: this.file?.type !== "application/dicom"
-
+        disabled: this.allowedTags
+      },
+      {
+        label: 'Restablecer imagen',
+        icon: 'pi pi-fw pi-refresh',
+        command: () => this.resetImageStyle(),
+        disabled: this.file == null || this.allowedTags
+      },
+      {
+        label: 'Información',
+        icon: 'pi pi-fw pi-info-circle',
+        command: () => this.showInfo(),
       }
     ]
+  }
+
+  get allowedTags(): boolean{
+    if (this.file?.type === ""){
+      const fileExt = "." + this.file?.name.split(".").pop()
+      const accepted = fileExt === '.dcm'
+      return !accepted
+    }
+    return this.file?.type !== "application/dicom"
   }
 
   constructor(private dialogService: DialogService,
@@ -172,6 +196,8 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   private widgetManager = vtkWidgetManager.newInstance();
   private distanceLineWidget: string | undefined
   private selectedLineWidgetIndex: number | undefined | null
+  private window: number | undefined
+  private level: number | undefined
 
 
   //Tags Dialog
@@ -192,7 +218,7 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
   }
 
 
-  render() {
+  render(): void {
     if (this.file == null) {
       return
     }
@@ -221,7 +247,8 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
 
   showTags(): DynamicDialogRef {
     this.ref = this.dialogService.open(TagsComponent, {
-      header: 'DICOM Tags'
+      header: 'DICOM Tags',
+      styleClass: ' md:w-[50%] md:h-[70%] w-full h-full'
     });
     const dialogRef = this.dialogService.dialogComponentRefMap.get(this.ref);
     const dynamicComponent = dialogRef?.instance as DynamicDialogComponent;
@@ -229,6 +256,25 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
     const ariaLabelledBy = dynamicComponent.getAriaLabelledBy();
     dynamicComponent.getAriaLabelledBy = () => ariaLabelledBy;
     return this.ref;
+  }
+
+  showInfo(): DynamicDialogRef {
+    this.ref = this.dialogService.open(InfoComponent, {
+      header: 'Información de Uso',
+      styleClass: 'md:w-[50%] md:h-[70%] w-full h-full'
+    });
+    const dialogRef = this.dialogService.dialogComponentRefMap.get(this.ref);
+    const dynamicComponent = dialogRef?.instance as DynamicDialogComponent;
+
+    const ariaLabelledBy = dynamicComponent.getAriaLabelledBy();
+    dynamicComponent.getAriaLabelledBy = () => ariaLabelledBy;
+    return this.ref;
+  }
+
+  resetImageStyle(): void {
+    this.actor.getProperty().setColorLevel(this.level!);
+    this.actor.getProperty().setColorWindow(this.window!);
+    this.renderWindow.render()
   }
 
   onWidgetChangeSelection(selectedOption: string): void {
@@ -396,8 +442,15 @@ export class VtkVisualizerComponent implements OnChanges, Applier<any> {
         button: 3,
       });
     this.style.addMouseManipulator(mouseZooming);
-
     // Se ajusta la cámara para que las imágenes tengan la orientación adecuada
+
+    const imageProperty = this.actor.getProperty();
+    const scalarRange = image.getPointData().getScalars().getRange();
+    this.window = scalarRange[1] - scalarRange[0];
+    this.level = (scalarRange[0] + scalarRange[1]) / 2;
+
+    imageProperty.setColorLevel(this.level);
+    imageProperty.setColorWindow(this.window);
 
     const camera = this.renderer.getActiveCamera();
     camera.setOrientationWXYZ(180, 1, 0, 0)

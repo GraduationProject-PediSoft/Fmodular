@@ -3,8 +3,12 @@ import { AlgorithmService } from '../../services/algorithm.service';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { TabIndex } from './internal/menucontroller.enum';
-import { IntrospectionArgsType, IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
+import { IntrospectionFieldsType, IntrospectionQueryResponse } from 'src/app/shared/introspection.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
+/**
+ * The view that represents the process of selecting the algorithm, the service, the form, the results, etc
+ */
 @Component({
   selector: 'app-algorithm',
   templateUrl: './algorithm.component.html',
@@ -38,6 +42,8 @@ export class AlgorithmComponent implements OnInit{
       .subscribe({
         next: (v:IntrospectionQueryResponse) => { 
           this.algorithms = v.__schema.queryType.fields as IntrospectionFieldsType[];
+          this.buildFormBool = false
+          this.result = undefined
           if(this.algorithms.length > 0){
             this.activeIndex = TabIndex.ALGORITHM
           }else{
@@ -56,7 +62,8 @@ export class AlgorithmComponent implements OnInit{
 
   getServices(){
     this.loadingS = true
-    this.algorithmS.getServices().pipe(
+    this.algorithmS.getServices()
+    .pipe(
       finalize(() =>{
         this.loadingS = false
       })
@@ -67,12 +74,20 @@ export class AlgorithmComponent implements OnInit{
           this.showServiceError = true
         }
       },
-      error: () =>{
-        this.messS.add({
-          severity: "error",
-          summary: "Error al obtener algoritmos, consulta tu conexión",
-          sticky: true
-        })
+      error: (e: HttpErrorResponse) =>{
+        if(e.status === 401){
+          this.messS.add({
+            severity: "error",
+            summary: "Logueate otra vez",
+            sticky: true
+          })
+        }else{
+          this.messS.add({
+            severity: "error",
+            summary: "Error al obtener algoritmos, consulta tu conexión",
+          })
+        }
+        
       }
     })
   }

@@ -1,0 +1,7 @@
+<form [formGroup]="deleteUserForm" (ngSubmit)="deleteUser()">
+    <div class="form-item">
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" pInputText formControlName="username"/>
+    </div>
+    <p-button type="submit" label="Enviar" [disabled]="this.deleteUserForm.invalid" [loading]="loading"></p-button>
+</form>

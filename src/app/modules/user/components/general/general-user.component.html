@@ -1,0 +1,16 @@
+<p-tabView>
+    <p-tabPanel>
+        <ng-template pTemplate="header">
+            <i class="pi pi-save"></i>
+            <span>Crear Usuario</span>
+        </ng-template>
+        <app-create-user></app-create-user>
+    </p-tabPanel>
+    <p-tabPanel header="Header II">
+        <ng-template pTemplate="header">
+            <i class="pi pi-user"></i>
+            <span>Eliminar Usuario</span>
+        </ng-template>
+        <app-delete-user></app-delete-user>
+    </p-tabPanel>
+</p-tabView>

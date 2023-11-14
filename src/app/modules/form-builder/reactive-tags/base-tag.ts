@@ -1,3 +1,8 @@
+/**
+ * @type BaseTag
+ * A base tag class that all custom tags should inherit, this is a class and not an
+ * interface to represent an unsupported tag
+ */
 export class BaseTag<T>{
     value: T | undefined
     key: string

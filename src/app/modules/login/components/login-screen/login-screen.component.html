@@ -1,28 +1,25 @@
-<div class="container">
-    
-    <div class="login-card">
-        <div class="left-side">
-            
-            <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1430&q=80" alt="">
+<p-toast></p-toast>
 
-        </div>
-        <div class="right-side">
-            <img src="assets/logo-pedisoft-circle.png" alt="dsfsdfdsf">
-            <h2>Pedisoft Login</h2>
+<div class="flex flex-col md:flex-row h-screen">
+    <div class="w-full md:w-1/2 bg-blue-500 text-white p-10 flex flex-col justify-center items-center">
+        <img src="assets/logo-pedisoft-circle.png" alt="Pedisoft" class="max-w-full max-h-60 object-contain mb-6" />
+        <h1 class="text-4xl font-semibold mb-4">Bienvenido a pedisoft</h1>
+        <p class="text-lg">Aplicativo integrador de algoritmos de inteligencia artificial</p>
+    </div>
 
+    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center items-center">
+        <h2 class="text-3xl font-semibold mb-4">Login</h2>
+        <form class="flex flex-col w-full max-w-sm" [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="form-item">
-                <label htmlFor="username">Username</label>
-                <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" pInputText formControlName="username" />
             </div>
-
             <div class="form-item">
-                <label htmlFor="password">Password</label>
-                <input pInputText id="username" aria-describedby="username-help" [(ngModel)]="a" />
+                <label for="password">Contraseña:</label>
+                <p-password inputStyleClass="w-full" styleClass="w-full" id="password" formControlName="password" [feedback]="false"></p-password>
             </div>
-
-            <p-button label="Ingresar" (onClick)="login()"></p-button>
-            
-
-        </div>
+            <p-button class="self-center" [loading]="loading" label="Iniciar" type="submit"
+                [disabled]="loginForm.invalid"></p-button>
+        </form>
     </div>
 </div>

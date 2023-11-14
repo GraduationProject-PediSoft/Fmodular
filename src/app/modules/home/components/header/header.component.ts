@@ -1,5 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
+/**
+ * The main header of the web page, it also defines the components to view in a responsive way (cellphone)
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,7 +18,7 @@ export class HeaderComponent {
 
   mobileMenuVisible = false
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private auth: AuthService, private router: Router, private message: MessageService) {
   }
 
 
@@ -22,6 +29,20 @@ export class HeaderComponent {
       this.renderer.addClass(this.mobileNavBar.nativeElement, "hidden")
     }
     this.mobileMenuVisible = !this.mobileMenuVisible
+  }
+
+  logout(){
+    this.auth.logout().subscribe({
+      next: ()=>{
+        this.router.navigate(["/login"])
+      },
+      error:(e: HttpErrorResponse)=>{
+        this.message.add({
+          severity: "error",
+          summary: e.message
+        })
+      }
+    })
   }
 
 }

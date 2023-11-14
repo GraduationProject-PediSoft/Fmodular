@@ -8,6 +8,11 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { IntrospectionArgsType, IntrospectionReturnType } from 'src/app/shared/introspection.interface';
 
+/**
+ * This component defines the general html that represents the form for each IA service
+ * @implements OnInit for building the form on instantiation
+ * @implements OnChanges for rebuilding the doom in a reactive way
+ */
 @Component({
   selector: 'app-algorithm-form',
   templateUrl: './algorithm-form.component.html',

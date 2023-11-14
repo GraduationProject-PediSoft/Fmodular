@@ -1,10 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BaseTag } from '../../result-tags/base-tag';
-import { TagConverterService } from '../../services/tag-converter.service';
 import { ImageDownloaderService } from '../../services/image-downloader.service';
 import { ShareDataResultService } from 'src/app/shared/services/share-data-result.service';
 import { MessageService } from 'primeng/api';
 
+/**
+ * A component to represent a simple tag that contains a type for the response view
+ */
 @Component({
   selector: 'app-result-tag',
   templateUrl: './result-tag.component.html',
@@ -16,7 +18,6 @@ export class ResultTagComponent implements OnInit{
   tag!: BaseTag<any>
 
   constructor(private downloader: ImageDownloaderService,
-    private sharedDataS: ShareDataResultService,
     private messageS: MessageService
   ){}
 
@@ -24,7 +25,9 @@ export class ResultTagComponent implements OnInit{
     this.initSpecialData(this.tag.type)
   }
 
-  //Init special data based on the type of the tag
+  /**
+   * Init special data based on the type of the tag
+   */
   private initSpecialData(tagType:string){
     switch(tagType){
       case 'visualizer':{
@@ -42,6 +45,10 @@ export class ResultTagComponent implements OnInit{
         break
       }
     }
+  }
+
+  get displayLabel(): boolean{
+    return !["visualizer", "visualizer-polydata", "json"].includes(this.tag.type) 
   }
   
 }

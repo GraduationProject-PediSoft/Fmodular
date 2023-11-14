@@ -1,5 +1,5 @@
 <div class="container">
-    <label class="block text-gray-600 text-sm font-semibold mb-1" [attr.for]="tag.key">{{tag.key}}</label>
+    <label *ngIf="displayLabel" class="block text-gray-600 text-sm font-semibold mb-1" [attr.for]="tag.key">{{tag.key | titlecase}}</label>
 
     <ng-container [ngSwitch]="tag.type">
 

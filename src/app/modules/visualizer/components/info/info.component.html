@@ -1,0 +1,35 @@
+<p-table [value]="[[]]" styleClass="p-datatable-gridlines">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Evento</th>
+            <th>Descripción</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <tr>
+            <td class="flex items-center">
+              <img src="https://visualpharm.com/assets/151/Mouse%20Left%20Click-595b40b75ba036ed117d6503.svg" width="32" height="32"> Click izquierdo
+            </td>
+            <td>Mantén pulsado el click izquierdo y luego desliza el ratón para cambiar el estilo de la imagen.</td>
+        </tr>
+        <tr>
+            <td class="flex items-center"> 
+                <img src="https://visualpharm.com/assets/45/Mouse%20Scrolling-595b40b85ba036ed117db023.svg" width="32" height="32">Click rueda del ratón
+            </td>
+            <td>Mantén pulsado el click de la rueda del ratón y luego desliza para mover la imagen.</td>
+        </tr>
+        <tr>
+            <td class="flex items-center">
+                <img src="https://visualpharm.com/assets/535/Mouse%20Right%20Click-595b40b75ba036ed117d89e3.svg" width="32" height="32"> Click derecho
+            </td>
+            <td>Mantén pulsado el click derecho y luego desliza el ratón para cambiar el zoom de la imagen.</td>
+        </tr>
+        <tr>
+            <td>
+                 Ctrl + Click izquierdo
+            </td>
+            <td>Pulsa la tecla Ctrl + Click izquierdo y luego desliza el ratón para rotar la imagen.</td>
+        </tr>
+    </ng-template>
+</p-table>
+

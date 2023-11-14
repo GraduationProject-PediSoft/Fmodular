@@ -16,13 +16,18 @@ import { MainComponent } from './components/main/main.component';
 import { UsersComponent } from './components/users/users.component';
 import { HelpComponent } from './components/help/help.component';
 import { FieldsetModule } from 'primeng/fieldset';
-import { StepsModule } from 'primeng/steps';
 import { DividerModule } from 'primeng/divider';
 import { FormBuilderModule } from "../form-builder/form-builder.module";
-import { TabViewModule,  } from 'primeng/tabview';
+import { TabViewModule, } from 'primeng/tabview';
 import { MessageModule } from 'primeng/message';
 import { ResultModule } from '../result/result.module';
+import { UserModule } from '../user/user.module';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
+/**
+ * This is the main module of the project, containes the basic view for selecting a service,
+ * an algorithm, filling the form and viewing the results
+ */
 @NgModule({
     declarations: [
         HeaderComponent,
@@ -47,12 +52,13 @@ import { ResultModule } from '../result/result.module';
         HttpClientModule,
         ToastModule,
         FieldsetModule,
-        StepsModule,
         DividerModule,
         FormBuilderModule,
         TabViewModule,
         MessageModule,
-        ResultModule
+        ResultModule,
+        UserModule,
+        YouTubePlayerModule
     ]
 })
 export class HomeModule { }

@@ -1,4 +1,7 @@
 
+/**
+ * Return type info
+ */
 export interface IntrospectionReturnType {
     ofType: {
         name: string;
@@ -16,6 +19,9 @@ export interface IntrospectionReturnType {
 
 }
 
+/**
+ * Param info
+ */
 export interface IntrospectionArgsType {
     name: string;
     type: {
@@ -36,11 +42,18 @@ export interface IntrospectionArgsType {
     };
 }
 
+/**
+ * General info for the Algorithm
+ */
 export interface IntrospectionFieldsType {
     name: string;
     type: IntrospectionReturnType
     args: Array<IntrospectionArgsType >;
 }
+
+/**
+ * Main Type for the introspection result
+ */
 export interface IntrospectionQueryResponse {
     __schema: {
         queryType: {

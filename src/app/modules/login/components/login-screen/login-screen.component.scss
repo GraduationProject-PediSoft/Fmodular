@@ -1,32 +1,3 @@
-.container{
-    @apply flex justify-center items-center h-screen w-screen min-h-full min-w-full md:px-40 px-4;
-}
-
-.login-card{
-    @apply min-w-full flex flex-col lg:flex-row h-[80vh] shadow-md
-}
-
-.left-side{
-    @apply flex-1 hidden md:block;
-
-    img{
-        @apply w-full h-full object-cover
-    }
-}
-
-
-.right-side{
-    @apply flex-1 flex flex-col bg-blue-500 items-center p-4 rounded-lg;
-
-    img{
-        @apply w-auto h-1/4 mb-8 
-    }
-
-    h2{
-        @apply text-base font-bold text-center  mb-8 
-    }
-}
-
 .form-item{
-    @apply flex flex-col gap-2  mb-8 
+    @apply flex flex-col gap-2  mb-8 flex-1 flex-grow-0 flex-shrink-0;
 }
